@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "description": "Inspects the computed css properties applied to an element in storybook",
   "keywords": [
-    "inspector", "css", "variables", "tokens", "storybook-addons"
+    "inspector",
+    "css",
+    "variables",
+    "storybook-addons"
   ],
   "repository": {
     "type": "git",
@@ -68,6 +71,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "0.0.0-pr-26654-sha-49d01553",
+    "tiny-invariant": "^1.3.3",
     "tsup": "^8.2.4",
     "typescript": "^5.5.4",
     "vite": "^5.3.5",
@@ -84,22 +88,30 @@
   },
   "bundler": {
     "exportEntries": [
-      "src/index.ts"
+      "src/inspector/index.ts"
     ],
     "managerEntries": [
-      "src/manager.tsx"
+      "src/inspector/manager.ts"
     ],
     "previewEntries": [
-      "src/preview.ts"
+      "src/inspector/preview.ts"
     ],
     "nodeEntries": [
-      "src/preset.ts"
+      "src/inspector/preset.ts"
     ]
   },
   "storybook": {
     "displayName": "Inspector",
     "supportedFrameworks": [
-      "react", "vue", "angular", "web-components", "ember", "html", "svelte", "preact", "react-native"
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember",
+      "html",
+      "svelte",
+      "preact",
+      "react-native"
     ],
     "icon": "https://user-images.githubusercontent.com/321738/63501763-88dbf600-c4cc-11e9-96cd-94adadc2fd72.png"
   }
