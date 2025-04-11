@@ -6,10 +6,10 @@
     "experimentalDecorators": true,
     "incremental": false,
     "isolatedModules": true,
+    "resolveJsonModule": true,
     "jsx": "react",
-    "lib": ["es2020", "dom"],
+    "lib": ["es2021", "dom"],
     "module": "commonjs",
-    "noImplicitAny": true,
     "rootDir": "./src",
     "skipLibCheck": true,
     "target": "ES2020"
