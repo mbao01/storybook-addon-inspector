@@ -1,8 +1,8 @@
 import React, { memo, useCallback, useEffect } from "react";
 
 import { EyeIcon } from "@storybook/icons";
-import { IconButton } from "storybook/internal/components";
-import { useGlobals, useStorybookApi } from "storybook/internal/manager-api";
+import { IconButton } from "@storybook/components";
+import { useGlobals, useStorybookApi } from "@storybook/manager-api";
 
 import { ADDON_ID, PARAM_KEY, TOOL_ID } from "./constants";
 
@@ -19,8 +19,8 @@ export const Tool = memo(function InspectorToolAddonSelector() {
 
   useEffect(() => {
     api.setAddonShortcut(ADDON_ID, {
-      label: "Toggle Inspector [I]",
-      defaultShortcut: ["I"],
+      label: "Toggle Inspector [P]",
+      defaultShortcut: ["P"],
       actionName: "inspector",
       showInMenu: false,
       action: toggleInspector,

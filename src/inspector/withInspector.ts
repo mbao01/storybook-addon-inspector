@@ -1,10 +1,10 @@
 /* eslint-env browser */
-import type { DecoratorFunction } from "storybook/internal/types";
+import type { DecoratorFunction } from "@storybook/types";
+import { useEffect } from "@storybook/preview-api";
 
 import { destroy, init, rescale } from "./box-model/canvas";
 import { drawSelectedElement } from "./box-model/visualizer";
 import { deepElementFromPoint } from "./util";
-import { useEffect } from "storybook/internal/preview-api";
 import { PARAM_KEY } from "./constants";
 
 let nodeAtPointerRef;
