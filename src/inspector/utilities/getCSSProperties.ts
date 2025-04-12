@@ -131,7 +131,7 @@ export const getCSSProperties = (node) => {
         token,
         variable,
         variableValue,
-        computed: computed[property],
+        computed: computed.getPropertyValue(property),
       };
       return acc;
     },

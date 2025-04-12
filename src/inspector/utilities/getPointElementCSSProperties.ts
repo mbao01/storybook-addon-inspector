@@ -4,12 +4,16 @@ import { getCSSProperties } from "./getCSSProperties";
 import { getElementFromPoint } from "./getElementFromPoint";
 
 export const getPointElementCSSProperties = (point: Point) => {
-  const nodeAtPointerRef = getElementFromPoint(point.x, point.y);
+  try {
+    const nodeAtPointerRef = getElementFromPoint(point.x, point.y);
 
-  if (nodeAtPointerRef) {
-    const { result } = getCSSProperties(nodeAtPointerRef);
+    if (nodeAtPointerRef) {
+      const { result } = getCSSProperties(nodeAtPointerRef);
 
-    drawSelectedElement(nodeAtPointerRef);
-    return result;
+      drawSelectedElement(nodeAtPointerRef);
+      return result;
+    }
+  } catch (e) {
+    return;
   }
 };
