@@ -1,6 +1,6 @@
 import { addons, types } from "@storybook/manager-api";
 
-import { Tool } from "./Tool";
+import { Tool } from "./components";
 import { ADDON_ID, TOOL_ID } from "./constants";
 
 export default addons.register(ADDON_ID, () => {

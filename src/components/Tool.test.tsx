@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import "@testing-library/jest-dom";
 import { Tool } from "./Tool";
-import { PARAM_KEY } from "./constants";
+import { PARAM_KEY } from "../constants";
 
 // Mock Storybook hooks
 const mockUpdateGlobals = vi.fn();

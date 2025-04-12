@@ -103,16 +103,16 @@
   },
   "bundler": {
     "exportEntries": [
-      "src/inspector/index.ts"
+      "src/index.ts"
     ],
     "managerEntries": [
-      "src/inspector/manager.ts"
+      "src/manager.ts"
     ],
     "previewEntries": [
-      "src/inspector/preview.ts"
+      "src/preview.ts"
     ],
     "nodeEntries": [
-      "src/inspector/preset.ts"
+      "src/preset.ts"
     ]
   },
   "storybook": {
