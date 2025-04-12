@@ -1,15 +1,21 @@
+:root {
+  --background: #8e7ffd;
+  --padding: 0.5rem;
+  --nk-button-border-radius: 2rem;
+}
+
 .storybook-button {
   font-family: 'Nunito Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 700;
   border: 0;
-  border-radius: 3em;
+  border-radius: var(--nk-button-border-radius);
   cursor: pointer;
   display: inline-block;
   line-height: 1;
 }
 .storybook-button--primary {
   color: white;
-  background-color: #1ea7fd;
+  background-color: var(--background);
 }
 .storybook-button--secondary {
   color: #333;
@@ -22,7 +28,7 @@
 }
 .storybook-button--medium {
   font-size: 14px;
-  padding: 11px 20px;
+  padding: var(--padding);
 }
 .storybook-button--large {
   font-size: 16px;

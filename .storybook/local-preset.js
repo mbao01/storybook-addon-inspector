@@ -8,7 +8,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 function previewAnnotations(entry = []) {
-  return [...entry, resolve(__dirname, "../dist/preview.js")];
+  return [
+    ...entry,
+    resolve(__dirname, "../dist/preview.js"),
+    resolve(__dirname, "../dist/preview.css"),
+  ];
 }
 
 function managerEntries(entry = []) {
