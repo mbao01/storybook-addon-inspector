@@ -2,18 +2,42 @@ import React from "react";
 
 /* eslint-env browser */
 import type { DecoratorFunction } from "@storybook/types";
-import { useCallback, useEffect, useState } from "@storybook/preview-api";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "@storybook/preview-api";
 
-import type { Point } from "./utilities/types";
+import type { CSSPropertiesObj, Point } from "./utilities/types";
 import { destroy, init, rescale } from "./utilities/box-model/canvas";
 import { PARAM_KEY } from "./constants";
-import { getPointElementCSSProperties } from "./utilities";
+import { getPointNodeAndCSSProperties, groupCSSProperties } from "./utilities";
+import { Popover } from "./components/Popover";
 
 const pointer: Point = { x: 0, y: 0 };
 
 export const withInspector: DecoratorFunction = (StoryFn, context) => {
   const isActive = context.globals?.[PARAM_KEY];
-  const [result, setResult] = useState(null);
+  const [{ node, properties }, setNodeProperties] = useState<{
+    node: HTMLElement | null;
+    properties: CSSPropertiesObj | null;
+  }>({
+    node: null,
+    properties: null,
+  });
+
+  const { tokens, computed, variables } = useMemo(() => {
+    if (!properties) {
+      return { tokens: null, computed: null, variables: null };
+    }
+
+    const { tokens, computed, variables } = groupCSSProperties({
+      properties,
+    });
+
+    return { tokens, computed, variables };
+  }, [properties]);
 
   useEffect(() => {
     const onPointerMove = (event: MouseEvent) => {
@@ -34,11 +58,11 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   const onPointerOver = useCallback((event: MouseEvent) => {
     window.requestAnimationFrame(() => {
       event.stopPropagation();
-      const result = getPointElementCSSProperties({
+      const { node, properties } = getPointNodeAndCSSProperties({
         x: event.clientX,
         y: event.clientY,
       });
-      setResult(result);
+      setNodeProperties({ node, properties });
     });
   }, []);
 
@@ -58,14 +82,14 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     window.removeEventListener("resize", onResize);
     document.removeEventListener("pointerover", onPointerOver);
     destroy();
-    setResult(null);
+    setNodeProperties({ node: null, properties: null });
   };
 
   useEffect(() => {
     if (context.viewMode === "story" && isActive) {
       handleInit();
-      const result = getPointElementCSSProperties(pointer); // Draw the element below the pointer when first enabled
-      setResult(result);
+      const { node, properties } = getPointNodeAndCSSProperties(pointer); // Draw the element below the pointer when first enabled
+      setNodeProperties({ node, properties });
     } else {
       handleDestroy();
     }
@@ -73,10 +97,16 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     return handleDestroy;
   }, [isActive, context.viewMode]);
 
+  console.log("Node: ", node);
+
   return (
     <>
       {StoryFn()}
-      <pre>{JSON.stringify(result, null, 2)}</pre>
+      <Popover tokens={tokens} computed={computed} variables={variables} />
+      <pre>Tokens: {JSON.stringify(tokens, null, 2)}</pre>
+      {/* <pre>Variables: {JSON.stringify(variables, null, 2)}</pre>
+      <pre>Computed: {JSON.stringify(computed, null, 2)}</pre>
+      <pre>{JSON.stringify(properties, null, 2)}</pre> */}
     </>
   );
 };

@@ -1,5 +1,5 @@
 export { displayCSSProperties } from "./displayCSSProperties";
 export { getCSSProperties } from "./getCSSProperties";
 export { getElementFromPoint } from "./getElementFromPoint";
-export { getPointElementCSSProperties } from "./getPointElementCSSProperties";
+export { getPointNodeAndCSSProperties } from "./getPointNodeAndCSSProperties";
 export { groupCSSProperties } from "./groupCSSProperties";

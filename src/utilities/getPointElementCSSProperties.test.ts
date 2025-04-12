@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { getPointElementCSSProperties } from "./getPointElementCSSProperties";
+import { getPointNodeAndCSSProperties } from "./getPointNodeAndCSSProperties";
 import { getElementFromPoint } from "./getElementFromPoint";
 import { getCSSProperties } from "./getCSSProperties";
 import { drawSelectedElement } from "./box-model/visualizer";
@@ -10,7 +10,7 @@ vi.mock("./getElementFromPoint");
 vi.mock("./getCSSProperties");
 vi.mock("./box-model/visualizer");
 
-describe("getPointElementCSSProperties", () => {
+describe("getPointNodeAndCSSProperties", () => {
   const mockPoint = { x: 10, y: 10 };
   const mockElement = { id: "test-element" } as HTMLElement;
   const mockCSSProperties = {
@@ -42,7 +42,7 @@ describe("getPointElementCSSProperties", () => {
   });
 
   it("returns CSS properties when element is found", () => {
-    const result = getPointElementCSSProperties(mockPoint);
+    const result = getPointNodeAndCSSProperties(mockPoint);
     expect(getElementFromPoint).toHaveBeenCalledWith(mockPoint.x, mockPoint.y);
     expect(getCSSProperties).toHaveBeenCalledWith(mockElement);
     expect(drawSelectedElement).toHaveBeenCalledWith(mockElement);
@@ -51,7 +51,7 @@ describe("getPointElementCSSProperties", () => {
 
   it("returns undefined when no element is found", () => {
     vi.mocked(getElementFromPoint).mockReturnValue(null);
-    const result = getPointElementCSSProperties(mockPoint);
+    const result = getPointNodeAndCSSProperties(mockPoint);
     expect(result).toBeUndefined();
     expect(drawSelectedElement).not.toHaveBeenCalled();
   });
@@ -63,7 +63,7 @@ describe("getPointElementCSSProperties", () => {
     });
 
     // The function should catch the error and return undefined
-    const result = getPointElementCSSProperties(mockPoint);
+    const result = getPointNodeAndCSSProperties(mockPoint);
     expect(result).toBeUndefined();
   });
 });
