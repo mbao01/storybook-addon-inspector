@@ -37,8 +37,8 @@
     "*.d.ts"
   ],
   "scripts": {
-    "build": "tsup",
-    "build:watch": "pnpm build -- --watch",
+    "build": "vite build",
+    "build:watch": "vite build --watch",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
