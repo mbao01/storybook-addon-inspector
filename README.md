@@ -44,7 +44,7 @@ Addons can interact with a Storybook project in multiple ways. It is recommended
 
 Since each of these places represents a different environment with different features and modules, it is also recommended to split and build your modules accordingly. This addon-kit comes with a preconfigured [bundling configuration](./vite.config.ts) that supports this split, and you are free to modify and extend it as needed.
 
-You can define which modules match which environments in the [`package.json#bundler`](./package.json) property:
+You can define which modules match which environments in the [`vite.config,ts`](./vite.config.ts) property:
 
 - `exportEntries` is a list of module entries that users can manually import from anywhere they need to. For example, you could have decorators that users need to import into their `preview.ts` file or utility functions that can be used in their `main.ts` files.
 - `managerEntries` is a list of module entries meant only for the manager UI. These modules will be bundled to ESM and won't include types since they are mostly loaded by Storybook directly.

@@ -11,7 +11,7 @@ function previewAnnotations(entry = []) {
   return [
     ...entry,
     resolve(__dirname, "../dist/preview.js"),
-    resolve(__dirname, "../dist/preview.css"),
+    resolve(__dirname, "../dist/style.css"),
   ];
 }
 

@@ -29,7 +29,7 @@ import type { ProjectAnnotations, Renderer } from "@storybook/types";
 
 import { PARAM_KEY } from "./constants";
 import { withInspector } from "./withInspector";
-import "./styles.css";
+import "./stylesheets/index.css";
 
 /**
  * Note: if you want to use JSX in this file, rename it to `preview.tsx`
