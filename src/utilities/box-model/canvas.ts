@@ -2,17 +2,17 @@ import { global } from "@storybook/global";
 
 import invariant from "tiny-invariant";
 
-interface Size {
+type Size = {
   width: number;
   height: number;
-}
+};
 
-interface CanvasState {
+type CanvasState = {
   canvas?: HTMLCanvasElement;
   context?: CanvasRenderingContext2D;
   width?: number;
   height?: number;
-}
+};
 
 function getDocumentWidthAndHeight() {
   const container = global.document.documentElement;

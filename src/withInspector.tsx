@@ -73,5 +73,10 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     return handleDestroy;
   }, [isActive, context.viewMode]);
 
-  return StoryFn();
+  return (
+    <>
+      {StoryFn()}
+      <pre>{JSON.stringify(result, null, 2)}</pre>
+    </>
+  );
 };

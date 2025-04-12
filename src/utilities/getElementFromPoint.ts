@@ -3,7 +3,7 @@ import { global } from "@storybook/global";
 export const getElementFromPoint = (x: number, y: number) => {
   const element = global.document.elementFromPoint(x, y) as HTMLElement;
 
-  const crawlShadows = (node: HTMLElement): HTMLElement => {
+  const crawlShadows = (node: HTMLElement) => {
     if (node && node.shadowRoot) {
       // elementFromPoint() doesn't exist in ShadowRoot type
       const nestedElement = node.shadowRoot.elementFromPoint(

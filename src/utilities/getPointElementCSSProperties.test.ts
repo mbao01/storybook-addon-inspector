@@ -3,7 +3,7 @@ import { getPointElementCSSProperties } from "./getPointElementCSSProperties";
 import { getElementFromPoint } from "./getElementFromPoint";
 import { getCSSProperties } from "./getCSSProperties";
 import { drawSelectedElement } from "./box-model/visualizer";
-import type { TObj } from "./types";
+import type { Obj } from "./types";
 
 // Mock the dependencies
 vi.mock("./getElementFromPoint");
@@ -30,8 +30,8 @@ describe("getPointElementCSSProperties", () => {
         variableValue: undefined,
       },
     },
-    tokens: {} as TObj,
-    variables: {} as TObj,
+    tokens: {} as Obj,
+    variables: {} as Obj,
   };
 
   beforeEach(() => {

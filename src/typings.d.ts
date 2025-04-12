@@ -1,25 +1,25 @@
-interface Margin {
+type Margin = {
   top: number;
   bottom: number;
   left: number;
   right: number;
-}
+};
 
-interface Padding {
+type Padding = {
   top: number;
   bottom: number;
   left: number;
   right: number;
-}
+};
 
-interface Border {
+type Border = {
   top: number;
   bottom: number;
   left: number;
   right: number;
-}
+};
 
-interface Dimensions {
+type Dimensions = {
   margin: Margin;
   padding: Padding;
   border: Border;
@@ -29,21 +29,21 @@ interface Dimensions {
   left: number;
   bottom: number;
   right: number;
-}
+};
 
-interface Extremities {
+type Extremities = {
   top: number;
   bottom: number;
   left: number;
   right: number;
-}
+};
 
-interface FloatingAlignment {
-  x: 'left' | 'right';
-  y: 'top' | 'bottom';
-}
+type FloatingAlignment = {
+  x: "left" | "right";
+  y: "top" | "bottom";
+};
 
-interface ElementMeasurements extends Dimensions {
+type ElementMeasurements = Dimensions & {
   extremities: Extremities;
   floatingAlignment: FloatingAlignment;
-}
+};

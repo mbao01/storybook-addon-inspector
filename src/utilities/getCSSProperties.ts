@@ -17,31 +17,35 @@
  */
 import SHORTHAND_PROPERTIES_MAP from "./data/css-shorthands.json";
 
-import type { TObj } from "./types";
+import type { CSSPropertiesObj, Obj } from "./types";
 
 const SHORTHAND_PROPERTIES = Object.keys(SHORTHAND_PROPERTIES_MAP);
 
-const getOutputAndShorthandOutput = (node) => {
+const getOutputAndShorthandOutput = (node: HTMLElement) => {
   const stylesheets = document.styleSheets;
-  const output: TObj = {};
-  const shorthandOutput: TObj = {};
+  const output: Obj = {};
+  const shorthandOutput: Obj = {};
 
   for (let sIndex = 0; sIndex < stylesheets.length; sIndex++) {
     const stylesheet = stylesheets[sIndex];
     const rules = stylesheet.cssRules || stylesheet.rules;
     for (let rIndex = 0; rIndex < rules.length; rIndex++) {
-      const { selectorText, style } = rules[rIndex] as any;
+      const { selectorText, style } = rules[rIndex] as CSSStyleRule;
       if (node?.matches(selectorText)) {
-        const properties = [...style];
+        // Get all property names from the style object
+        const properties = Array.from(style).filter((prop) =>
+          style.getPropertyValue(prop),
+        );
+
         for (let property of SHORTHAND_PROPERTIES) {
-          const value = style[property];
+          const value = style.getPropertyValue(property);
           if (value) {
-            shorthandOutput[property] = style[property];
+            shorthandOutput[property] = value;
           }
         }
 
         for (let property of properties) {
-          const value = style[property];
+          const value = style.getPropertyValue(property);
           if (value) {
             output[property] = value;
           }
@@ -53,13 +57,15 @@ const getOutputAndShorthandOutput = (node) => {
   return { output, shorthandOutput };
 };
 
+type MarryShorthandOutputParams = {
+  output: Obj;
+  shorthandOutput: Obj;
+};
+
 const marryShorthandOutput = ({
   output,
   shorthandOutput,
-}: {
-  output: TObj;
-  shorthandOutput: TObj;
-}) => {
+}: MarryShorthandOutputParams) => {
   const result = { ...output };
   Object.entries(shorthandOutput).forEach(([shorthand, shorthandValue]) => {
     if (shorthandValue) {
@@ -74,18 +80,26 @@ const marryShorthandOutput = ({
   return { output: result };
 };
 
-const getCSSVariableStyles = ({ output }: { output: TObj }) => {
+type CSSVariableStylesParams = {
+  output: Obj;
+};
+
+const getCSSVariableStyles = ({ output }: CSSVariableStylesParams) => {
   const styles = Object.entries(output).reduce((acc, [property, value]) => {
     if (value.startsWith("var(")) {
       acc[property] = value;
     }
     return acc;
-  }, {} as TObj);
+  }, {} as Obj);
 
   return { styles };
 };
 
-const getAppliedCSSVariables = ({ styles }: { styles: TObj }) => {
+type AppliedCSSVariablesParams = {
+  styles: Obj;
+};
+
+const getAppliedCSSVariables = ({ styles }: AppliedCSSVariablesParams) => {
   const variables = Object.entries(styles).reduce((acc, [property, value]) => {
     const regex = /var\((.*)\)/;
     const match = value.match(regex);
@@ -94,12 +108,16 @@ const getAppliedCSSVariables = ({ styles }: { styles: TObj }) => {
       acc[property] = match[1];
     }
     return acc;
-  }, {} as TObj);
+  }, {} as Obj);
 
   return { variables };
 };
 
-const getAppliedTokens = ({ styles }: { styles: TObj }) => {
+type AppliedTokensParams = {
+  styles: Obj;
+};
+
+const getAppliedTokens = ({ styles }: AppliedTokensParams) => {
   const tokens = Object.entries(styles).reduce((acc, [property, value]) => {
     const regex = /var\(--nk-(.*)\)/;
     const match = value.match(regex);
@@ -108,12 +126,12 @@ const getAppliedTokens = ({ styles }: { styles: TObj }) => {
       acc[property] = match[1].replaceAll("-", "_").toUpperCase();
     }
     return acc;
-  }, {} as TObj);
+  }, {} as Obj);
 
   return { tokens };
 };
 
-export const getCSSProperties = (node) => {
+export const getCSSProperties = (node: HTMLElement) => {
   const { output } = marryShorthandOutput(getOutputAndShorthandOutput(node));
   const { styles } = getCSSVariableStyles({ output });
   const { variables } = getAppliedCSSVariables({ styles });
@@ -121,28 +139,19 @@ export const getCSSProperties = (node) => {
 
   const computed = getComputedStyle(node);
 
-  const result = Object.entries(output).reduce(
-    (acc, [property, value]) => {
-      const token = tokens[property];
-      const variable = variables[property];
-      const variableValue = computed.getPropertyValue(variable);
-      acc[property] = {
-        value,
-        token,
-        variable,
-        variableValue,
-        computed: computed.getPropertyValue(property),
-      };
-      return acc;
-    },
-    {} as Record<
-      string,
-      Record<
-        "value" | "token" | "computed" | "variable" | "variableValue",
-        string | undefined
-      >
-    >,
-  );
+  const result = Object.entries(output).reduce((acc, [property, value]) => {
+    const token = tokens[property];
+    const variable = variables[property];
+    const variableValue = computed.getPropertyValue(variable);
+    acc[property] = {
+      value,
+      token,
+      variable,
+      variableValue,
+      computed: computed.getPropertyValue(property),
+    };
+    return acc;
+  }, {} as CSSPropertiesObj);
 
   return {
     result,

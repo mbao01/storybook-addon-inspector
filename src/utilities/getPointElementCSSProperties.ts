@@ -1,5 +1,4 @@
 import type { Point } from "./types";
-import { drawSelectedElement } from "./box-model/visualizer";
 import { getCSSProperties } from "./getCSSProperties";
 import { getElementFromPoint } from "./getElementFromPoint";
 
@@ -10,10 +9,10 @@ export const getPointElementCSSProperties = (point: Point) => {
     if (nodeAtPointerRef) {
       const { result } = getCSSProperties(nodeAtPointerRef);
 
-      drawSelectedElement(nodeAtPointerRef);
+      // drawSelectedElement(nodeAtPointerRef);
       return result;
     }
-  } catch (e) {
+  } catch (e: unknown) {
     return;
   }
 };
