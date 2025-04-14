@@ -7,6 +7,8 @@ type Size = {
   height: number;
 };
 
+type CanvasType = "selected" | "hover";
+
 type CanvasState = {
   canvas?: HTMLCanvasElement;
   context?: CanvasRenderingContext2D;
@@ -22,9 +24,9 @@ function getDocumentWidthAndHeight() {
   return { width, height };
 }
 
-function createCanvas(): CanvasState {
+function createCanvas(type): CanvasState {
   const canvas = global.document.createElement("canvas");
-  canvas.id = "storybook-addon-inspector";
+  canvas.id = `storybook-addon-inspector-${type}`;
   const context = canvas.getContext("2d");
   invariant(context != null);
   // Set canvas width & height
@@ -59,43 +61,74 @@ function setCanvasWidthAndHeight(
   context.scale(scale, scale);
 }
 
-let state: CanvasState = {};
+let state: { hover: CanvasState; selected: CanvasState } = {
+  hover: {},
+  selected: {},
+};
 
 export function init() {
-  if (!state.canvas) {
-    state = createCanvas();
+  if (!state.selected.canvas) {
+    state.selected = createCanvas("selected");
+  }
+
+  if (!state.hover.canvas) {
+    state.hover = createCanvas("hover");
   }
 }
 
-export function clear() {
-  if (state.context) {
-    state.context.clearRect(0, 0, state.width ?? 0, state.height ?? 0);
+export function clear(type: CanvasType) {
+  if (state[type].context) {
+    state[type].context.clearRect(
+      0,
+      0,
+      state[type].width ?? 0,
+      state[type].height ?? 0,
+    );
   }
 }
 
-export function draw(callback: (context?: CanvasRenderingContext2D) => void) {
-  clear();
-  callback(state.context);
+export function draw(
+  type: CanvasType,
+  callback: (context?: CanvasRenderingContext2D) => void,
+) {
+  clear(type);
+  callback(state[type].context);
 }
 
 export function rescale() {
-  invariant(state.canvas, "Canvas should exist in the state.");
-  invariant(state.context, "Context should exist in the state.");
-  // First reset so that the canvas size doesn't impact the container size
-  setCanvasWidthAndHeight(state.canvas, state.context, { width: 0, height: 0 });
+  invariant(state.selected.canvas, "Canvas should exist in the state.");
+  invariant(state.selected.context, "Context should exist in the state.");
 
   const { width, height } = getDocumentWidthAndHeight();
-  setCanvasWidthAndHeight(state.canvas, state.context, { width, height });
+  setCanvasWidthAndHeight(state.selected.canvas, state.selected.context, {
+    width,
+    height,
+  });
+
+  // First reset so that the canvas size doesn't impact the container size
+  setCanvasWidthAndHeight(state.selected.canvas, state.selected.context, {
+    width: 0,
+    height: 0,
+  });
+  setCanvasWidthAndHeight(state.hover.canvas, state.hover.context, {
+    width: 0,
+    height: 0,
+  });
 
   // update state
-  state.width = width;
-  state.height = height;
+  state.selected.width = width;
+  state.selected.height = height;
 }
 
-export function destroy() {
-  if (state.canvas) {
-    clear();
-    state.canvas.parentNode?.removeChild(state.canvas);
-    state = {};
+export function destroy(type: CanvasType) {
+  if (state[type].canvas) {
+    clear(type);
+    state[type].canvas.parentNode?.removeChild(state[type].canvas);
+    state = { ...state, [type]: {} };
   }
+}
+
+export function destroyAll() {
+  destroy("selected");
+  destroy("hover");
 }

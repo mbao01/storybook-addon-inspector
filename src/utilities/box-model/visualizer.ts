@@ -200,5 +200,9 @@ function drawBoxModel(element: HTMLElement) {
 }
 
 export function drawSelectedElement(element: HTMLElement) {
-  draw(drawBoxModel(element));
+  draw("selected", drawBoxModel(element));
+}
+
+export function drawHoverElement(element: HTMLElement) {
+  draw("hover", drawBoxModel(element));
 }

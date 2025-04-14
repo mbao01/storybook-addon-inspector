@@ -1,7 +1,7 @@
 import type { Point } from "./types";
 import { getCSSProperties } from "./getCSSProperties";
 import { getElementFromPoint } from "./getElementFromPoint";
-import { drawSelectedElement } from "./box-model/visualizer";
+import { drawHoverElement, drawSelectedElement } from "./box-model/visualizer";
 
 export const getPointNodeAndCSSProperties = (point: Point) => {
   try {
@@ -23,10 +23,10 @@ export const getPointNodeAndCSSProperties = (point: Point) => {
   }
 };
 
-
-
-export const drawElementOnPoint = (point: Point) => {
+export const drawHoverElementOnPoint = (point: Point, currentNode) => {
   const nodeAtPointerRef = getElementFromPoint(point.x, point.y);
 
-  drawSelectedElement(nodeAtPointerRef);
+  if (nodeAtPointerRef && !nodeAtPointerRef.contains(currentNode)) {
+    drawHoverElement(nodeAtPointerRef);
+  }
 };

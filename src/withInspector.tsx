@@ -10,13 +10,12 @@ import {
 } from "@storybook/preview-api";
 
 import type { CSSPropertiesObj, Point } from "./utilities/types";
-import { destroy, init, rescale } from "./utilities/box-model/canvas";
+import { destroyAll, init, rescale } from "./utilities/box-model/canvas";
 import { PARAM_KEY } from "./constants";
 import { getPointNodeAndCSSProperties, groupCSSProperties } from "./utilities";
 import { CSSPropertyPopover } from "./components";
 import "./stylesheets/index.css";
-import Example from "./components/CSSPropertyPopover";
-import { drawElementOnPoint } from "./utilities/getPointNodeAndCSSProperties";
+import { drawHoverElementOnPoint } from "./utilities/getPointNodeAndCSSProperties";
 
 const pointer: Point = { x: 0, y: 0 };
 
@@ -50,7 +49,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
       event.stopPropagation();
       pointer.x = event.clientX;
       pointer.y = event.clientY;
-      drawElementOnPoint(pointer);
+      drawHoverElementOnPoint(pointer, nodeProperties.node);
     });
   }, []);
 
@@ -83,7 +82,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   const handleDestroy = () => {
     window.removeEventListener("resize", onResize);
     document.removeEventListener("mousedown", onMouseDown);
-    destroy();
+    destroyAll();
     setNodeProperties({ node: null, properties: null });
     setOpen(false);
   };
