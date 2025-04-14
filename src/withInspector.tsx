@@ -13,21 +13,27 @@ import type { CSSPropertiesObj, Point } from "./utilities/types";
 import { destroy, init, rescale } from "./utilities/box-model/canvas";
 import { PARAM_KEY } from "./constants";
 import { getPointNodeAndCSSProperties, groupCSSProperties } from "./utilities";
-import { Popover } from "./components/Popover";
+import { CSSPropertyPopover } from "./components";
+import "./stylesheets/index.css";
+import Example from "./components/CSSPropertyPopover";
+import { drawElementOnPoint } from "./utilities/getPointNodeAndCSSProperties";
 
 const pointer: Point = { x: 0, y: 0 };
 
 export const withInspector: DecoratorFunction = (StoryFn, context) => {
+  const CSS_PROPERTIES_POPOVER_ID = "css-properties-popover";
   const isActive = context.globals?.[PARAM_KEY];
-  const [{ node, properties }, setNodeProperties] = useState<{
+  const [nodeProperties, setNodeProperties] = useState<{
     node: HTMLElement | null;
     properties: CSSPropertiesObj | null;
   }>({
     node: null,
     properties: null,
   });
+  const [open, setOpen] = useState(false);
 
   const { tokens, computed, variables } = useMemo(() => {
+    const { properties } = nodeProperties;
     if (!properties) {
       return { tokens: null, computed: null, variables: null };
     }
@@ -37,32 +43,28 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     });
 
     return { tokens, computed, variables };
-  }, [properties]);
+  }, [nodeProperties]);
 
-  useEffect(() => {
-    const onPointerMove = (event: MouseEvent) => {
-      window.requestAnimationFrame(() => {
-        event.stopPropagation();
-        pointer.x = event.clientX;
-        pointer.y = event.clientY;
-      });
-    };
-
-    document.addEventListener("pointermove", onPointerMove);
-
-    return () => {
-      document.removeEventListener("pointermove", onPointerMove);
-    };
+  const onPointerMove = useCallback((event: MouseEvent) => {
+    window.requestAnimationFrame(() => {
+      event.stopPropagation();
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      drawElementOnPoint(pointer);
+    });
   }, []);
 
-  const onPointerOver = useCallback((event: MouseEvent) => {
+  const onMouseDown = useCallback((event: MouseEvent) => {
     window.requestAnimationFrame(() => {
       event.stopPropagation();
       const { node, properties } = getPointNodeAndCSSProperties({
         x: event.clientX,
         y: event.clientY,
       });
-      setNodeProperties({ node, properties });
+      if (node) {
+        setNodeProperties({ node, properties });
+        setOpen(true);
+      }
     });
   }, []);
 
@@ -73,23 +75,30 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   }, []);
 
   const handleInit = () => {
-    document.addEventListener("pointerover", onPointerOver);
+    document.addEventListener("mousedown", onMouseDown);
     init();
     window.addEventListener("resize", onResize);
   };
 
   const handleDestroy = () => {
     window.removeEventListener("resize", onResize);
-    document.removeEventListener("pointerover", onPointerOver);
+    document.removeEventListener("mousedown", onMouseDown);
     destroy();
     setNodeProperties({ node: null, properties: null });
+    setOpen(false);
   };
+
+  useEffect(() => {
+    document.addEventListener("pointermove", onPointerMove);
+
+    return () => {
+      document.removeEventListener("pointermove", onPointerMove);
+    };
+  }, []);
 
   useEffect(() => {
     if (context.viewMode === "story" && isActive) {
       handleInit();
-      const { node, properties } = getPointNodeAndCSSProperties(pointer); // Draw the element below the pointer when first enabled
-      setNodeProperties({ node, properties });
     } else {
       handleDestroy();
     }
@@ -97,16 +106,17 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     return handleDestroy;
   }, [isActive, context.viewMode]);
 
-  console.log("Node: ", node);
-
   return (
     <>
-      {StoryFn()}
-      <Popover tokens={tokens} computed={computed} variables={variables} />
-      <pre>Tokens: {JSON.stringify(tokens, null, 2)}</pre>
-      {/* <pre>Variables: {JSON.stringify(variables, null, 2)}</pre>
-      <pre>Computed: {JSON.stringify(computed, null, 2)}</pre>
-      <pre>{JSON.stringify(properties, null, 2)}</pre> */}
+      <StoryFn />
+      {isActive && (
+        <CSSPropertyPopover
+          id={CSS_PROPERTIES_POPOVER_ID}
+          open={open}
+          data={{ tokens, computed, variables }}
+        />
+      )}
     </>
   );
 };
+
