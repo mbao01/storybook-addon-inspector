@@ -172,8 +172,8 @@ describe("box-model visualizer", () => {
   // Test measureElement function indirectly
   it("correctly measures element with different scroll positions", () => {
     // Mock window scroll position
-    (global.window as any).scrollY = 50;
-    (global.window as any).scrollX = 50;
+    global.window.scrollY = 50;
+    global.window.scrollX = 50;
     
     drawSelectedElement(mockElement);
     expect(draw).toHaveBeenCalled();

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { viteFinal, webpack } from "./preset";
 
 // Mock console.log to prevent output during tests
-vi.spyOn(console, "log").mockImplementation(() => {});
+vi.spyOn(console, "log").mockImplementation(vi.fn());
 
 describe("Preset", () => {
   describe("viteFinal", () => {

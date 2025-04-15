@@ -67,8 +67,6 @@ describe("Manager", () => {
   });
   
   it("matches only when viewMode is 'story'", () => {
-    let matchFn: (params: { viewMode: string }) => boolean;
-    
     // Execute the registration code and capture the match function
     addons.register(ADDON_ID, () => {
       addons.add(TOOL_ID, {
@@ -78,10 +76,11 @@ describe("Manager", () => {
         render: Tool,
       });
     });
-    
+
     // Get the match function from the last call to add
-    matchFn = (vi.mocked(addons.add).mock.calls[0][1] as AddonConfig).match;
-    
+    const matchFn = (vi.mocked(addons.add).mock.calls[0][1] as AddonConfig)
+      .match;
+
     // Test the match function with different inputs
     expect(matchFn({ viewMode: "story" })).toBe(true);
     expect(matchFn({ viewMode: "docs" })).toBe(false);

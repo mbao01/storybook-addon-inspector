@@ -73,8 +73,8 @@ describe("floatingAlignment", () => {
 
   it("should handle different scroll positions", () => {
     // Mock window scroll position
-    (global.window as any).scrollY = 100;
-    (global.window as any).scrollX = 100;
+    global.window.scrollY = 100;
+    global.window.scrollX = 100;
 
     const extremities = {
       top: 150,

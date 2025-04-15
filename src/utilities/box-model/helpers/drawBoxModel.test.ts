@@ -4,7 +4,7 @@ import { drawMargin } from "./drawMargin";
 import { drawPadding } from "./drawPadding";
 import { drawBorder } from "./drawBorder";
 import { measureElement } from "./measureElement";
-import type { ElementMeasurements, FloatingAlignment } from "./types";
+import type { ElementMeasurements } from "./types";
 
 // Mock the helper functions
 vi.mock("./drawMargin", () => ({
