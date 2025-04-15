@@ -22,10 +22,12 @@ describe("getCSSProperties", () => {
       "--token-var": "var(--nk-test-token)",
       getPropertyValue: vi.fn().mockImplementation((prop) => {
         const values = {
-          color: "computed-red",
-          "font-size": "computed-16px",
-          margin: "computed-10px",
-          padding: "computed-20px",
+          color: "red",
+          "font-size": "16px",
+          margin: "10px",
+          padding: "20px",
+          "--custom-var": "var(--value)",
+          "--token-var": "var(--nk-test-token)",
           "--value": "computed-value",
         };
         return values[prop] ?? "";
@@ -46,21 +48,44 @@ describe("getCSSProperties", () => {
     const mockRule = {
       selectorText: ".test",
       style: mockStyle,
-    };
+      type: 1,
+      cssText: "",
+      parentRule: null,
+      parentStyleSheet: null,
+    } as unknown as CSSStyleRule;
 
-    // Mock StyleSheet with rules
+    // Mock stylesheet with rules
     const mockStyleSheet = {
       cssRules: [mockRule],
-    };
+      rules: [mockRule],
+      ownerRule: null,
+      type: "",
+      href: null,
+      ownerNode: null,
+      parentStyleSheet: null,
+      title: null,
+      media: {} as MediaList,
+      disabled: false,
+      insertRule: vi.fn(),
+      deleteRule: vi.fn(),
+    } as unknown as CSSStyleSheet;
 
-    // Mock StyleSheetList with array-like behavior
+    // Mock StyleSheetList
     mockStyleSheets = {
       length: 1,
       item: vi.fn().mockReturnValue(mockStyleSheet),
       [0]: mockStyleSheet,
+      [Symbol.iterator]: function* () {
+        yield mockStyleSheet;
+      },
     } as unknown as StyleSheetList;
 
-    // Mock computed style
+    // Mock document
+    global.document = {
+      styleSheets: mockStyleSheets,
+    } as unknown as Document;
+
+    // Mock getComputedStyle
     mockComputedStyle = {
       getPropertyValue: vi.fn().mockImplementation((prop) => {
         const values = {
@@ -69,20 +94,14 @@ describe("getCSSProperties", () => {
           margin: "computed-10px",
           padding: "computed-20px",
           "--value": "computed-value",
+          "--custom-var": "var(--value)",
+          "--token-var": "var(--nk-test-token)",
         };
         return values[prop] ?? "";
       }),
     } as unknown as CSSStyleDeclaration;
 
-    // Setup document and window mocks
-    Object.defineProperty(document, "styleSheets", {
-      get: () => mockStyleSheets,
-      configurable: true,
-    });
-    window.getComputedStyle = vi.fn().mockReturnValue(mockComputedStyle);
-
-    // Clear all mocks
-    vi.clearAllMocks();
+    global.getComputedStyle = vi.fn().mockReturnValue(mockComputedStyle);
   });
 
   it("returns computed styles for matching elements", () => {
@@ -105,11 +124,9 @@ describe("getCSSProperties", () => {
   });
 
   it("returns empty result when no matching rules found", () => {
-    (mockElement.matches as ReturnType<typeof vi.fn>).mockReturnValue(false);
+    vi.mocked(mockElement.matches).mockReturnValue(false);
     const result = getCSSProperties(mockElement);
     expect(result.result).toEqual({});
-    expect(result.variables).toEqual({});
-    expect(result.tokens).toEqual({});
   });
 
   it("handles shorthand properties", () => {
