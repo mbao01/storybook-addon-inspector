@@ -15,7 +15,7 @@ A powerful Storybook addon that allows you to inspect and analyze computed CSS p
 ## Installation
 
 ```sh
-npm install --save-dev storybook-addon-inspector
+pnpm add -D storybook-addon-inspector
 ```
 
 ## Configuration
@@ -37,22 +37,85 @@ export default {
 1. Start your Storybook instance
 2. Click the Inspector icon in the Storybook toolbar
 3. Click on any element in your story to inspect its computed CSS properties
-4. View detailed information about:
+4. View information about:
    - Computed styles
    - CSS variables
-   - Box model
    - Typography
    - Layout properties
 
+## Documentation
+
+### Keyboard Shortcuts
+
+- Press <kbd>p</kbd> to toggle the inspector mode
+- Press <kbd>Esc</kbd> to exit inspector mode
+
+### Features in Detail
+
+#### Computed Styles
+View all computed CSS properties applied to the selected element, including:
+
+#### CSS Variables
+- See all CSS custom properties (variables) applied to the element
+- View the computed values of CSS variables
+- Track variable inheritance and overrides
+
+#### Real-time Updates
+- Styles update in real-time as you interact with your components
+- Changes in CSS variables are reflected immediately
+- Hover states and transitions are captured
+
+#### Framework Support
+This addon works with all major frameworks supported by Storybook:
+- React
+- Vue
+- Angular
+- Web Components
+- Ember
+- HTML
+- Svelte
+- Preact
+- React Native
+
+### Tips & Tricks
+
+1. **Inspecting Nested Elements**
+   - Hover over elements to see their computed styles
+   - Click to select an element for detailed inspection
+   - Use the element picker to select deeply nested elements
+
+2. **Debugging CSS Variables**
+   - Look for the CSS Variables section to see all custom properties
+   - Track variable inheritance through the component tree
+   - Identify overridden variables
+
+3. **Performance Optimization**
+   - The inspector updates in real-time, so it's perfect for debugging responsive designs
+   - Use it to verify media query implementations
+   - Check computed values across different viewport sizes
+
+### Known Limitations
+
+- Some framework-specific styling solutions might not be fully visible
+- Dynamic styles applied through JavaScript might not be immediately reflected
+- Very large style sheets might impact performance
+
 ## Development
+
+### Prerequisites
+
+- Node.js (Latest LTS version recommended)
+- pnpm (Package manager)
 
 ### Available Scripts
 
-- `npm run start` - Runs babel in watch mode and starts Storybook
-- `npm run build` - Builds and packages your addon code
-- `npm run test` - Runs the test suite
-- `npm run test:watch` - Runs tests in watch mode
-- `npm run test:coverage` - Runs tests with coverage reporting
+- `pnpm start` - Runs the build in watch mode and starts Storybook
+- `pnpm build` - Builds and packages your addon code
+- `pnpm test` - Runs the test suite
+- `pnpm test:watch` - Runs tests in watch mode
+- `pnpm test:coverage` - Runs tests with coverage reporting
+- `pnpm storybook` - Starts Storybook in development mode
+- `pnpm storybook:build` - Builds the Storybook static site
 
 ### Project Structure
 
@@ -62,13 +125,18 @@ The addon code lives in `src` and demonstrates core addon concepts:
 - `src/Panel.tsx` - Panel view implementation
 - `src/Tab.tsx` - Tab view implementation
 
-### State Management
+## Supported Frameworks
 
-The addon uses various patterns for state management:
-
-- `src/withGlobals.ts` & `src/Tool.tsx` - Demonstrates `useGlobals` for global state
-- `src/withRoundTrip.ts` & `src/Panel.tsx` - Shows two-way communication using channels
-- `src/Tab.tsx` - Uses `useParameter` to access story parameters
+This addon supports the following frameworks:
+- React
+- Vue
+- Angular
+- Web Components
+- Ember
+- HTML
+- Svelte
+- Preact
+- React Native
 
 ## Contributing
 
@@ -78,183 +146,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 MIT © [Ayomide Bakare](https://github.com/mbao01)
 
-### Development scripts
-
-- `npm run start` runs babel in watch mode and starts Storybook
-- `npm run build` build and package your addon code
-
-### Switch from TypeScript to JavaScript
-
-Don't want to use TypeScript? We offer a handy eject command: `npm run eject-ts`
-
-This will convert all code to JS. It is a destructive process, so we recommended running this before you start writing any code.
-
-## What's included?
-
-![Demo](https://user-images.githubusercontent.com/42671/107857205-e7044380-6dfa-11eb-8718-ad02e3ba1a3f.gif)
-
-The addon code lives in `src`. It demonstrates all core addon related concepts. The three [UI paradigms](https://storybook.js.org/docs/react/addons/addon-types#ui-based-addons)
-
-- `src/Tool.tsx`
-- `src/Panel.tsx`
-- `src/Tab.tsx`
-
-Which, along with the addon itself, are registered in `src/manager.ts`.
-
-Managing State and interacting with a story:
-
-- `src/withGlobals.ts` & `src/Tool.tsx` demonstrates how to use `useGlobals` to manage global state and modify the contents of a Story.
-- `src/withRoundTrip.ts` & `src/Panel.tsx` demonstrates two-way communication using channels.
-- `src/Tab.tsx` demonstrates how to use `useParameter` to access the current story's parameters.
-
-Your addon might use one or more of these patterns. Feel free to delete unused code. Update `src/manager.ts` and `src/preview.ts` accordingly.
-
-Lastly, configure you addon name in `src/constants.ts`.
-
-### Bundling
-
-Addons can interact with a Storybook project in multiple ways. It is recommended to familiarize yourself with [the basics](https://storybook.js.org/docs/react/addons/introduction) before getting started.
-
-- Manager entries are used to add UI or behavior to the Storybook manager UI.
-- Preview entries are used to add UI or behavior to the preview iframe where stories are rendered.
-- Presets are used to modify the Storybook configuration, similar to how [users can configure their `main.ts` configurations](https://storybook.js.org/docs/react/api/main-config).
-
-Since each of these places represents a different environment with different features and modules, it is also recommended to split and build your modules accordingly. This addon-kit comes with a preconfigured [bundling configuration](./vite.config.ts) that supports this split, and you are free to modify and extend it as needed.
-
-You can define which modules match which environments in the [`vite.config,ts`](./vite.config.ts) property:
-
-- `exportEntries` is a list of module entries that users can manually import from anywhere they need to. For example, you could have decorators that users need to import into their `preview.ts` file or utility functions that can be used in their `main.ts` files.
-- `managerEntries` is a list of module entries meant only for the manager UI. These modules will be bundled to ESM and won't include types since they are mostly loaded by Storybook directly.
-- `previewEntries` is a list of module entries meant only for the preview UI. These modules will be bundled to ESM and won't include types since they are mostly loaded by Storybook directly.
-
-Manager and preview entries are only used in the browser so they only output ESM modules. Export entries could be used both in the browser and in Node depending on their use case, so they both output ESM and CJS modules.
-
-#### Globalized packages
-
-Storybook provides a predefined set of packages that are available in the manager UI and the preview UI. In the final bundle of your addon, these packages should not be included. Instead, the imports should stay in place, allowing Storybook to replace those imports with the actual packages during the Storybook build process.
-
-The list of packages differs between the manager and the preview, which is why there is a slight difference between `managerEntries` and `previewEntries`. Most notably, `react` and `react-dom` are prebundled in the manager but not in the preview. This means that your manager entries can use React to build UI without bundling it or having a direct reference to it. Therefore, it is safe to have React as a `devDependency` even though you are using it in production. _Requiring React as a peer dependency would unnecessarily force your users to install React._
-
-An exception to this rule is if you are using React to inject UI into the preview, which does not come prebundled with React. In such cases, you need to move `react` and `react-dom` to a peer dependency. However, we generally advise against this pattern since it would limit the usage of your addon to React-based Storybooks.
-
-### Metadata
-
-Storybook addons are listed in the [catalog](https://storybook.js.org/addons) and distributed via npm. The catalog is populated by querying npm's registry for Storybook-specific metadata in `package.json`. This project has been configured with sample data. Learn more about available options in the [Addon metadata docs](https://storybook.js.org/docs/react/addons/addon-catalog#addon-metadata).
-
-## Documentation
-
-To help the community use your addon and understand its capabilities, please document it thoroughly.
-
-To get started, replace this README with the content in this sample template, modeled after how essential addons (like [Actions](https://storybook.js.org/docs/essentials/actions)) are documented. Then update the content to describe your addon.
-
-### Sample documentation template
-
-```md
-# My Addon
-
-## Installation
-
-First, install the package.
-
-```sh
-npm install --save-dev my-addon
-```
-
-Then, register it as an addon in `.storybook/main.js`.
-
-```js
-// .storybook/main.ts
-
-// Replace your-framework with the framework you are using (e.g., react-webpack5, vue3-vite)
-import type { StorybookConfig } from '@storybook/your-framework';
-
-const config: StorybookConfig = {
-  // ...rest of config
-  addons: [
-    '@storybook/addon-essentials'
-    'my-addon', // 👈 register the addon here
-  ],
-};
-
-export default config;
-```
-
-## Usage
-
-The primary way to use this addon is to define the `exampleParameter` parameter. You can do this the
-component level, as below, to affect all stories in the file, or you can do it for a single story.
-
-```js
-// Button.stories.ts
-
-// Replace your-framework with the name of your framework
-import type { Meta } from '@storybook/your-framework';
-
-import { Button } from './Button';
-
-const meta: Meta<typeof Button> = {
-  component: Button,
-  parameters: {
-    myAddon: {
-      exampleParameter: true,
-      // See API section below for available parameters
-    }
-  }
-};
-
-export default meta;
-```
-
-Another way to use the addon is...
-
-## API
-
-### Parameters
-
-This addon contributes the following parameters to Storybook, under the `myAddon` namespace:
-
-#### `disable`
-
-Type: `boolean`
-
-Disable this addon's behavior. This parameter is most useful to allow overriding at more specific
-levels. For example, if this parameter is set to true at the project level, it could then be
-re-enabled by setting it to false at the meta (component) or story level.
-
-### Options
-
-When registering this addon, you can configure it with the following options, which are passed when
-registering the addon, like so:
-
-```ts
-// .storybook/main.ts
-
-// Replace your-framework with the framework you are using (e.g., react-webpack5, vue3-vite)
-import type { StorybookConfig } from '@storybook/your-framework';
-
-const config: StorybookConfig = {
-  // ...rest of config
-  addons: [
-    '@storybook/essentials',
-    {
-      name: 'my-addon',
-      options: {
-        // 👈 options for my-addon go here
-      },
-    },
-  ],
-};
-
-export default config;
-```
-
-#### `useExperimentalBehavior`
-
-Type: `boolean`
-
-Enable experimental behavior to...
-
-```
 
 ## Release Management
 
@@ -283,7 +174,7 @@ NPM_TOKEN=<value you just got from npm>
 Lastly, **create labels on GitHub**. You'll use these labels in the future when making changes to the package.
 
 ```bash
-npx auto create-labels
+pnpm dlx auto create-labels
 ```
 
 If you check on GitHub, you'll now see a set of labels that `auto` would like you to use. Use these to tag future pull requests.
@@ -299,7 +190,7 @@ Go to `Settings > Secrets`, click `New repository secret`, and add your `NPM_TOK
 To create a release locally you can run the following command, otherwise the GitHub action will make the release for you.
 
 ```sh
-npm run release
+pnpm release
 ```
 
 That will:
