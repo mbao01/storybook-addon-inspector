@@ -1,0 +1,123 @@
+name: Deploy
+
+on:
+  workflow_call:
+    secrets:
+      VERCEL_TOKEN:
+        required: true
+      VERCEL_ORG_ID:
+        required: true
+      VERCEL_PROJECT_ID:
+        required: true
+
+jobs:
+  preview:
+    name: 🤓 Preview deployment
+    if: ${{ github.ref_type != 'tag' }}
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      PREVIEW_URL: ${{ steps.deploy.outputs.PREVIEW_URL }}
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📡 Setup
+        uses: ./.github/setup
+
+      - name: Install Vercel CLI
+        run: pnpm add -g vercel@latest
+
+      - name: Pull Vercel environment information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build project artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - id: deploy
+        name: Deploy project artifacts to vercel
+        run: |
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} > deploy.log
+          PREVIEW_URL=$(cat deploy.log | grep -o 'https://[^ ]*.vercel.app' | head -n1)
+          echo "PREVIEW_URL=$PREVIEW_URL" >> $GITHUB_OUTPUT
+
+  deploy:
+    name: 🚀 Deploy
+    if: ${{ github.ref_type == 'tag' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'The triggering workflow passed'
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📡 Setup
+        uses: ./.github/setup
+
+      - name: Install Vercel CLI
+        run: pnpm add -g vercel@latest
+
+      - name: Pull Vercel environment information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build project artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy project artifacts to vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+  comment:
+    name: 📝 Comment Preview Url
+    if: ${{ github.ref_name != 'main' }}
+    runs-on: ubuntu-latest
+    needs: [preview]
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Comment Preview URL to PR
+        uses: actions/github-script@v6
+        id: comment-deployment-url-script
+        env:
+          PREVIEW_URL: ${{ needs.preview.outputs.PREVIEW_URL }}
+        with:
+          script: |
+            // Get pull requests that are open for current ref.
+            const pullRequests = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: 'open',
+                head: `${context.repo.owner}:${context.ref.replace('refs/heads/', '')}`
+            })
+
+            // Set issue number for following calls from context (if on pull request event) or from above variable.
+            const issueNumber = context.issue.number || pullRequests.data[0].number
+
+            // Retrieve existing bot comments for the PR
+            const {data: comments} = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issueNumber,
+            })
+            const botComment = comments.find(comment => {
+                return comment.user.type === 'Bot' && comment.body.includes('Preview deployed at')
+            })
+
+            const output = "Preview deployed at " + process.env.PREVIEW_URL
+
+            // If we have a comment, update it, otherwise create a new one
+            if (botComment) {
+                github.rest.issues.updateComment({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    comment_id: botComment.id,
+                    body: output
+                })
+            } else {
+                github.rest.issues.createComment({
+                    issue_number: issueNumber,
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    body: output
+                })
+            }

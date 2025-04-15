@@ -1,0 +1,80 @@
+name: 🚢 Publish packages
+
+on:
+  push:
+    tags:
+      - "**/*@v*.*.*"
+      - "v*.*.*"
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    outputs:
+      TAG_BRANCH: ${{ steps.tag_branch.outputs.TAG_BRANCH }}
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      # Get all branches associated with tag branches
+      - name: Get tag branches
+        id: tag_branch
+        # 1. Get the list of branches ref where this tag exists
+        # 2. Remove 'origin/' from that result
+        # 3. Put that string in output
+        # => We can now use function 'contains(list, item)''
+        run: |
+          $(git fetch)
+          raw=$(git branch -a -r --contains ${{ github.ref_name }})
+          TAG_BRANCH=${raw##*/}
+          echo "TAG_BRANCH=$TAG_BRANCH" >> $GITHUB_OUTPUT
+          echo "Branches where this tag exists : $TAG_BRANCH"
+
+  cancel:
+    needs: [guard]
+    if: ${{ contains(needs.guard.outputs.TAG_BRANCH, 'main') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel previous runs
+        uses: styfle/cancel-workflow-action@0.12.0
+
+  build:
+    name: Build
+    uses: ./.github/workflows/callable-build.yml
+    needs: [cancel]
+
+  publish:
+    name: 📦 Publish packages
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📡 Setup
+        uses: ./.github/setup
+
+      - name: Restore build
+        id: cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            **/*/dist
+            **/*/storybook-static
+          key: ${{ runner.os }}-build-${{ github.sha }}
+
+      - name: Install Dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        shell: bash
+        run: pnpm build
+
+      - name: 🟠 Set npm token and registry
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+
+      - name: 👏 Run release script
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          pnpm release

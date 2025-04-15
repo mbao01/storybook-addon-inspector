@@ -39,14 +39,15 @@
   "scripts": {
     "build": "vite build",
     "build:watch": "vite build --watch",
+    "lint": "eslint --report-unused-disable-directives --max-warnings 0",
+    "prerelease": "zx scripts/prepublish-checks.js",
+    "release": "auto shipit",
+    "start": "run-p build:watch \"storybook dev -p 6006 --quiet\"",
+    "storybook": "storybook dev -p 6006",
+    "storybook:build": "storybook build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "start": "run-p build:watch \"storybook dev -p 6006 --quiet\"",
-    "prerelease": "zx scripts/prepublish-checks.js",
-    "release": "pnpm build && auto shipit",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "test:coverage": "vitest run --coverage"
   },
   "devDependencies": {
     "@radix-ui/react-popover": "^1.1.7",

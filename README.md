@@ -1,5 +1,82 @@
 # Storybook Addon Inspector
-Inspects the computed css properties applied to an element in storybook
+
+A powerful Storybook addon that allows you to inspect and analyze computed CSS properties applied to elements in your stories. This addon provides a comprehensive view of styles, making it easier to debug and understand how CSS is being applied to your components.
+
+![Demo](https://user-images.githubusercontent.com/42671/107857205-e7044380-6dfa-11eb-8718-ad02e3ba1a3f.gif)
+
+## Features
+
+- 🔍 Inspect computed CSS properties of any element in your stories
+- 📊 View CSS variables and their computed values
+- 🎯 Real-time style inspection
+- 🛠️ Easy-to-use interface integrated into Storybook's toolbar
+- 🔄 Live updates as you interact with your components
+
+## Installation
+
+```sh
+npm install --save-dev storybook-addon-inspector
+```
+
+## Configuration
+
+Add the addon to your Storybook configuration (`.storybook/main.js`):
+
+```js
+// .storybook/main.js
+export default {
+  addons: [
+    // ... other addons
+    'storybook-addon-inspector'
+  ],
+};
+```
+
+## Usage
+
+1. Start your Storybook instance
+2. Click the Inspector icon in the Storybook toolbar
+3. Click on any element in your story to inspect its computed CSS properties
+4. View detailed information about:
+   - Computed styles
+   - CSS variables
+   - Box model
+   - Typography
+   - Layout properties
+
+## Development
+
+### Available Scripts
+
+- `npm run start` - Runs babel in watch mode and starts Storybook
+- `npm run build` - Builds and packages your addon code
+- `npm run test` - Runs the test suite
+- `npm run test:watch` - Runs tests in watch mode
+- `npm run test:coverage` - Runs tests with coverage reporting
+
+### Project Structure
+
+The addon code lives in `src` and demonstrates core addon concepts:
+
+- `src/Tool.tsx` - Toolbar integration
+- `src/Panel.tsx` - Panel view implementation
+- `src/Tab.tsx` - Tab view implementation
+
+### State Management
+
+The addon uses various patterns for state management:
+
+- `src/withGlobals.ts` & `src/Tool.tsx` - Demonstrates `useGlobals` for global state
+- `src/withRoundTrip.ts` & `src/Panel.tsx` - Shows two-way communication using channels
+- `src/Tab.tsx` - Uses `useParameter` to access story parameters
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT © [Ayomide Bakare](https://github.com/mbao01)
 
 ### Development scripts
 
@@ -72,7 +149,7 @@ To get started, replace this README with the content in this sample template, mo
 
 ### Sample documentation template
 
-````md
+```md
 # My Addon
 
 ## Installation
@@ -177,7 +254,7 @@ Type: `boolean`
 
 Enable experimental behavior to...
 
-````
+```
 
 ## Release Management
 
@@ -203,13 +280,13 @@ GH_TOKEN=<value you just got from GitHub>
 NPM_TOKEN=<value you just got from npm>
 ```
 
-Lastly, **create labels on GitHub**. You’ll use these labels in the future when making changes to the package.
+Lastly, **create labels on GitHub**. You'll use these labels in the future when making changes to the package.
 
 ```bash
 npx auto create-labels
 ```
 
-If you check on GitHub, you’ll now see a set of labels that `auto` would like you to use. Use these to tag future pull requests.
+If you check on GitHub, you'll now see a set of labels that `auto` would like you to use. Use these to tag future pull requests.
 
 #### GitHub Actions
 
