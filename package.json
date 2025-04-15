@@ -42,10 +42,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "start": "run-p build:watch \"storybook --quiet\"",
+    "start": "run-p build:watch \"storybook dev -p 6006 --quiet\"",
     "prerelease": "zx scripts/prepublish-checks.js",
     "release": "pnpm build && auto shipit",
-    "eject-ts": "zx scripts/eject-typescript.js",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },

@@ -1,5 +1,4 @@
 import type { StorybookConfig } from "@storybook/react-vite";
-import { managerEntries, previewAnnotations } from "./local-preset.js";
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
@@ -7,6 +6,7 @@ const config: StorybookConfig = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "storybook-addon-inspector",
   ],
   framework: {
     name: "@storybook/react-vite",
@@ -15,8 +15,6 @@ const config: StorybookConfig = {
   docs: {
     autodocs: "tag",
   },
-  managerEntries,
-  previewAnnotations,
 };
 
 export default config;

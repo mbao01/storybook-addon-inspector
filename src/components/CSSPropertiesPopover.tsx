@@ -47,8 +47,23 @@ export const CSSPropertiesPopover = ({
   const computed = data.computed ?? [];
   const variables = data.variables ?? [];
 
-  const hasNoProperties =
-    tokens.length === 0 && variables.length === 0 && computed.length === 0;
+  const groups = [
+    {
+      title: "Tokens",
+      icon: <Paintbrush className="size-4 text-emerald-500" />,
+      properties: tokens,
+    },
+    {
+      title: "Variables",
+      icon: <Variable className="size-4 text-violet-500" />,
+      properties: variables,
+    },
+    {
+      title: "Computed",
+      icon: <Code className="size-4 text-sky-500" />,
+      properties: computed,
+    },
+  ].filter(({ properties }) => properties.length > 0);
 
   return (
     <Popover open={open}>
@@ -65,6 +80,7 @@ export const CSSPropertiesPopover = ({
         <div className="relative">
           <div className="absolute -top-7.5 left-0 right-4 flex items-center w-[172px]">
             <button
+              tabIndex={-1}
               type="button"
               onClick={() => setExpanded((e) => !e)}
               className="bg-white dark:bg-gray-900 text-gray-900/60 dark:text-white/60 px-3 py-1.5 -ml-px text-xs font-medium rounded-t-lg border border-gray-200 dark:border-gray-800 border-b-0 cursor-pointer"
@@ -82,41 +98,22 @@ export const CSSPropertiesPopover = ({
             <div className="relative h-[400px]">
               <ScrollArea className="h-full pr-3">
                 <div className="space-y-1">
-                  {tokens.length > 0 && (
-                    <PropertySection
-                      title="Tokens"
-                      icon={<Paintbrush className="size-4 text-emerald-500" />}
-                      properties={tokens}
-                    />
-                  )}
+                  {groups.map(({ title, icon, properties }, index) => {
+                    return (
+                      <>
+                        {index > 0 && (
+                          <Separator className="my-1 bg-gray-200 dark:bg-gray-800" />
+                        )}
+                        <PropertySection
+                          title={title}
+                          icon={icon}
+                          properties={properties}
+                        />
+                      </>
+                    );
+                  })}
 
-                  {variables.length > 0 && (
-                    <>
-                      {tokens.length > 0 && (
-                        <Separator className="my-1 bg-gray-200 dark:bg-gray-800" />
-                      )}
-                      <PropertySection
-                        title="Variables"
-                        icon={<Variable className="size-4 text-violet-500" />}
-                        properties={variables}
-                      />
-                    </>
-                  )}
-
-                  {computed.length > 0 && (
-                    <>
-                      {(tokens.length > 0 || variables.length > 0) && (
-                        <Separator className="my-1 bg-gray-200 dark:bg-gray-800" />
-                      )}
-                      <PropertySection
-                        title="Computed"
-                        icon={<Code className="size-4 text-sky-500" />}
-                        properties={computed}
-                      />
-                    </>
-                  )}
-
-                  {hasNoProperties && (
+                  {groups.length === 0 && (
                     <div className="py-6 text-sm text-center text-gray-500 dark:text-gray-400">
                       No CSS properties found
                     </div>
@@ -142,9 +139,10 @@ const PropertySection = ({ title, icon, properties }: PropertySectionProps) => {
   return (
     <div className="w-full">
       <button
+        type="button"
+        tabIndex={-1}
         onClick={() => setExpanded((e) => !e)}
         className="sticky top-0 z-10 bg-white dark:bg-gray-900 w-full px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 text-left"
-        type="button"
       >
         {isExpanded ? (
           <ChevronDown className="size-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
