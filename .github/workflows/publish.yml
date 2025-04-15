@@ -2,9 +2,8 @@ name: 🚢 Publish packages
 
 on:
   push:
-    tags:
-      - "**/*@v*.*.*"
-      - "v*.*.*"
+    branches:
+      - main
 
 jobs:
   guard:
