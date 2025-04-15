@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Fragment } from "react";
 
 import { useState } from "react";
 import {
@@ -95,7 +95,7 @@ export const CSSPropertiesPopover = ({
                 <div className="space-y-1">
                   {groups.map(({ title, icon, properties }, index) => {
                     return (
-                      <>
+                      <Fragment key={`${title}-${index}`}>
                         {index > 0 && (
                           <Separator className="my-1 bg-gray-200 dark:bg-gray-800" />
                         )}
@@ -104,7 +104,7 @@ export const CSSPropertiesPopover = ({
                           icon={icon}
                           properties={properties}
                         />
-                      </>
+                      </Fragment>
                     );
                   })}
 
@@ -220,6 +220,7 @@ const ColorValue = ({ value }: { value: string }) => {
     <div className="flex items-center gap-1.5">
       {isColor && (
         <div
+          data-testid="color-swatch"
           className="size-3.5 rounded-sm border border-gray-300 dark:border-gray-700 flex-shrink-0"
           style={{
             backgroundColor: value,

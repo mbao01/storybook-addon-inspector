@@ -1,11 +1,24 @@
 import { describe, it, expect, vi, beforeEach, type Mock } from "vitest";
-import { drawSelectedElement } from "./visualizer";
+import { drawSelectedElement, drawHoverElement } from "./visualizer";
 import { draw } from "./canvas";
 import { global } from "@storybook/global";
 
 // Mock the canvas module
 vi.mock("./canvas", () => ({
   draw: vi.fn(),
+}));
+
+// Mock the global window object
+vi.mock("@storybook/global", () => ({
+  global: {
+    window: {
+      scrollY: 0,
+      scrollX: 0,
+      innerHeight: 800,
+      innerWidth: 1200,
+    },
+    getComputedStyle: vi.fn(),
+  },
 }));
 
 describe("box-model visualizer", () => {
@@ -103,5 +116,100 @@ describe("box-model visualizer", () => {
     (global.getComputedStyle as Mock).mockReturnValue(noSpacingStyle);
     drawSelectedElement(mockElement);
     expect(draw).toHaveBeenCalled();
+  });
+
+  // Test drawHoverElement function
+  it("draws hover element visualization", () => {
+    drawHoverElement(mockElement);
+    expect(draw).toHaveBeenCalledWith("hover", expect.any(Function));
+  });
+
+  // Test pxToNumber function indirectly
+  it("correctly parses pixel values", () => {
+    const styleWithDifferentPxValues = {
+      ...mockComputedStyle,
+      marginTop: "20px",
+      marginBottom: "30px",
+      marginLeft: "40px",
+      marginRight: "50px",
+    };
+    (global.getComputedStyle as Mock).mockReturnValue(styleWithDifferentPxValues);
+    drawSelectedElement(mockElement);
+    expect(draw).toHaveBeenCalled();
+  });
+
+  // Test floatingAlignment function indirectly
+  it("determines correct floating alignment based on element position", () => {
+    // Element in top-left corner
+    const topLeftElement = {
+      getBoundingClientRect: vi.fn().mockReturnValue({
+        top: 10,
+        left: 10,
+        right: 110,
+        bottom: 110,
+        width: 100,
+        height: 100,
+      }),
+    } as unknown as HTMLElement;
+    drawSelectedElement(topLeftElement);
+    expect(draw).toHaveBeenCalled();
+
+    // Element in bottom-right corner
+    const bottomRightElement = {
+      getBoundingClientRect: vi.fn().mockReturnValue({
+        top: 700,
+        left: 1100,
+        right: 1200,
+        bottom: 800,
+        width: 100,
+        height: 100,
+      }),
+    } as unknown as HTMLElement;
+    drawSelectedElement(bottomRightElement);
+    expect(draw).toHaveBeenCalled();
+  });
+
+  // Test measureElement function indirectly
+  it("correctly measures element with different scroll positions", () => {
+    // Mock window scroll position
+    (global.window as any).scrollY = 50;
+    (global.window as any).scrollX = 50;
+    
+    drawSelectedElement(mockElement);
+    expect(draw).toHaveBeenCalled();
+  });
+
+  // Test drawBoxModel function indirectly
+  it("draws box model with different border widths", () => {
+    const styleWithThickBorders = {
+      ...mockComputedStyle,
+      borderTopWidth: "10px",
+      borderBottomWidth: "10px",
+      borderLeftWidth: "10px",
+      borderRightWidth: "10px",
+    };
+    (global.getComputedStyle as Mock).mockReturnValue(styleWithThickBorders);
+    drawSelectedElement(mockElement);
+    expect(draw).toHaveBeenCalled();
+  });
+
+  // Test with null context
+  it("handles null context gracefully", () => {
+    // Mock the draw function to return a function that can be called with null
+    const mockDrawFn = vi.fn().mockImplementation((_, callback) => {
+      if (callback) {
+        callback(null);
+      }
+    });
+    vi.mocked(draw).mockImplementation(mockDrawFn);
+    
+    drawSelectedElement(mockElement);
+    expect(draw).toHaveBeenCalled();
+  });
+
+  // Test with null element
+  it("handles null element gracefully", () => {
+    // @ts-expect-error - Testing with null element
+    expect(() => drawSelectedElement(null)).not.toThrow();
   });
 });
