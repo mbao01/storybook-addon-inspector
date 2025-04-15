@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, type Mock } from "vitest";
-import { getPointNodeAndCSSProperties } from "./getPointNodeAndCSSProperties";
+import { getPointNodeAndCSSProperties, drawHoverElementOnPoint } from "./getPointNodeAndCSSProperties";
 import { getElementFromPoint } from "./getElementFromPoint";
 import { getCSSProperties } from "./getCSSProperties";
-import { drawSelectedElement } from "./box-model/visualizer";
+import { drawHoverElement, drawSelectedElement } from "./box-model/visualizer";
 import type { Obj } from "./types";
 
 // Mock the dependencies
@@ -68,5 +68,43 @@ describe("getPointNodeAndCSSProperties", () => {
     // The function should catch the error and return null values
     const result = getPointNodeAndCSSProperties(mockPoint);
     expect(result).toEqual({ node: null, properties: null });
+  });
+});
+
+describe("drawHoverElementOnPoint", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("should draw hover element when element is found and not contained by current node", () => {
+    const mockElement = document.createElement("div");
+    const currentNode = document.createElement("div");
+    
+    vi.mocked(getElementFromPoint).mockReturnValue(mockElement);
+    vi.spyOn(mockElement, "contains").mockReturnValue(false);
+    
+    drawHoverElementOnPoint({ x: 0, y: 0 }, currentNode);
+    
+    expect(drawHoverElement).toHaveBeenCalledWith(mockElement);
+  });
+
+  it("should not draw hover element when element is found and contained by current node", () => {
+    const mockElement = document.createElement("div");
+    const currentNode = document.createElement("div");
+    
+    vi.mocked(getElementFromPoint).mockReturnValue(mockElement);
+    vi.spyOn(mockElement, "contains").mockReturnValue(true);
+    
+    drawHoverElementOnPoint({ x: 0, y: 0 }, currentNode);
+    
+    expect(drawHoverElement).not.toHaveBeenCalled();
+  });
+
+  it("should not draw hover element when no element is found", () => {
+    vi.mocked(getElementFromPoint).mockReturnValue(null);
+    
+    drawHoverElementOnPoint({ x: 0, y: 0 }, document.createElement("div"));
+    
+    expect(drawHoverElement).not.toHaveBeenCalled();
   });
 });
