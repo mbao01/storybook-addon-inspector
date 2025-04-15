@@ -42,10 +42,10 @@ describe("canvas utility", () => {
     vi.clearAllMocks();
 
     // Mock global document
-    global.document = mockDocument as any;
+    global.document = mockDocument as unknown as Document;
 
     // Mock global window
-    global.window = mockWindow as any;
+    global.window = mockWindow as unknown as Window & typeof globalThis;
 
     // Reset state and ensure canvas is destroyed
     destroy();

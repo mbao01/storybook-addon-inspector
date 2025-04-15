@@ -18,7 +18,10 @@ export const getPointNodeAndCSSProperties = (point: Point) => {
     }
 
     return { node: null, properties: null };
-  } catch (e: unknown) {
+  } catch (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    e: unknown
+  ) {
     return { node: null, properties: null };
   }
 };

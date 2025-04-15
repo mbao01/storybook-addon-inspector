@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 
 import { EyeIcon } from "@storybook/icons";
 import { IconButton } from "@storybook/components";

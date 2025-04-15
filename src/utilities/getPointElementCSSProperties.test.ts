@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, type Mock } from "vitest";
 import { getPointNodeAndCSSProperties } from "./getPointNodeAndCSSProperties";
 import { getElementFromPoint } from "./getElementFromPoint";
 import { getCSSProperties } from "./getCSSProperties";
@@ -38,7 +38,7 @@ describe("getPointNodeAndCSSProperties", () => {
     vi.clearAllMocks();
     vi.mocked(getElementFromPoint).mockReturnValue(mockElement);
     vi.mocked(getCSSProperties).mockReturnValue(mockCSSProperties);
-    vi.mocked(drawSelectedElement).mockImplementation(() => {});
+    vi.mocked(drawSelectedElement).mockImplementation(vi.fn());
   });
 
   it("returns CSS properties when element is found", () => {
@@ -58,7 +58,7 @@ describe("getPointNodeAndCSSProperties", () => {
 
   it("handles errors gracefully", () => {
     // Mock getElementFromPoint to throw an error
-    (getElementFromPoint as any).mockImplementation(() => {
+    (getElementFromPoint as Mock).mockImplementation(() => {
       throw new Error("Test error");
     });
 

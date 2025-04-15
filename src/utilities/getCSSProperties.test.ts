@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getCSSProperties } from "./getCSSProperties";
-import { global } from "@storybook/global";
 
 describe("getCSSProperties", () => {
   let mockElement: HTMLElement;
@@ -29,7 +28,7 @@ describe("getCSSProperties", () => {
           padding: "computed-20px",
           "--value": "computed-value",
         };
-        return values[prop] || "";
+        return values[prop] ?? "";
       }),
       [Symbol.iterator]: function* () {
         yield* [
@@ -71,7 +70,7 @@ describe("getCSSProperties", () => {
           padding: "computed-20px",
           "--value": "computed-value",
         };
-        return values[prop] || "";
+        return values[prop] ?? "";
       }),
     } as unknown as CSSStyleDeclaration;
 

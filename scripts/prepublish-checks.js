@@ -1,6 +1,7 @@
 #!/usr/bin/env zx
 
 import boxen from "boxen";
+import chalk from "chalk";
 import dedent from "dedent";
 import { readFile } from "node:fs/promises";
 import { globalPackages as globalManagerPackages } from "storybook/internal/manager/globals";
@@ -12,7 +13,6 @@ const name = packageJson.name;
 const displayName = packageJson.storybook.displayName;
 
 let exitCode = 0;
-$.verbose = false;
 
 /**
  * Check that meta data has been updated

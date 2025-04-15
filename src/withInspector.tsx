@@ -1,6 +1,4 @@
-import React from "react";
-
-/* eslint-env browser */
+/* eslint-disable react-hooks/rules-of-hooks */
 import type { DecoratorFunction } from "@storybook/types";
 import {
   useCallback,
@@ -51,6 +49,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
       pointer.y = event.clientY;
       drawHoverElementOnPoint(pointer, nodeProperties.node);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onMouseDown = useCallback((event: MouseEvent) => {
@@ -88,12 +87,15 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   };
 
   useEffect(() => {
-    document.addEventListener("pointermove", onPointerMove);
+    if (isActive) {
+      document.addEventListener("pointermove", onPointerMove);
+    }
 
     return () => {
       document.removeEventListener("pointermove", onPointerMove);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isActive]);
 
   useEffect(() => {
     if (context.viewMode === "story" && isActive) {
@@ -103,6 +105,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     }
 
     return handleDestroy;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isActive, context.viewMode]);
 
   return (
@@ -112,10 +115,11 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
         <CSSPropertiesPopover
           id={CSS_PROPERTIES_POPOVER_ID}
           open={open}
-          data={{ tokens, computed, variables }}
+          tokens={tokens ?? []}
+          computed={computed ?? []}
+          variables={variables ?? []}
         />
       )}
     </>
   );
 };
-

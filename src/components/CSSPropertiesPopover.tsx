@@ -24,28 +24,23 @@ type CSSPropertyValue = Record<
   property: string;
 };
 
-type Data = {
-  tokens: CSSPropertyValue[];
-  computed: CSSPropertyValue[];
-  variables: CSSPropertyValue[];
-};
 
 type CSSPropertyPopoverProps = {
   id: string;
-  data: Data;
+  tokens: CSSPropertyValue[];
+  computed: CSSPropertyValue[];
+  variables: CSSPropertyValue[];
   open: boolean;
 };
 
 export const CSSPropertiesPopover = ({
   id,
-  data,
+  tokens,
+  computed,
+  variables,
   open,
 }: CSSPropertyPopoverProps) => {
   const [isExpanded, setExpanded] = useState(true);
-
-  const tokens = data.tokens ?? [];
-  const computed = data.computed ?? [];
-  const variables = data.variables ?? [];
 
   const groups = [
     {

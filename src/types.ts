@@ -1,4 +1,4 @@
-export interface InspectorParameters {
+export type InspectorParameters = {
   /**
    * Inspector configuration
    *
@@ -7,4 +7,4 @@ export interface InspectorParameters {
     /** Remove the addon panel and disable the addon's behavior */
     disable?: boolean;
   };
-}
+};

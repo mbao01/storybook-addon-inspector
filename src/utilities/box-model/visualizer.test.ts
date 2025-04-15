@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, type Mock } from "vitest";
 import { drawSelectedElement } from "./visualizer";
 import { draw } from "./canvas";
 import { global } from "@storybook/global";
@@ -18,7 +18,7 @@ describe("box-model visualizer", () => {
       width: 200,
       height: 100,
     }),
-  };
+  } as unknown as HTMLElement;
 
   const mockComputedStyle = {
     marginTop: "10px",
@@ -37,11 +37,11 @@ describe("box-model visualizer", () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (global.getComputedStyle as any).mockReturnValue(mockComputedStyle);
+    (global.getComputedStyle as Mock).mockReturnValue(mockComputedStyle);
   });
 
   it("draws the box model visualization", () => {
-    drawSelectedElement(mockElement as any);
+    drawSelectedElement(mockElement);
     expect(draw).toHaveBeenCalled();
   });
 
@@ -55,8 +55,8 @@ describe("box-model visualizer", () => {
         width: 0,
         height: 0,
       }),
-    };
-    drawSelectedElement(zeroElement as any);
+    } as unknown as HTMLElement;
+    drawSelectedElement(zeroElement);
     expect(draw).toHaveBeenCalled();
   });
 
@@ -70,8 +70,8 @@ describe("box-model visualizer", () => {
         width: -100,
         height: -100,
       }),
-    };
-    drawSelectedElement(negativeElement as any);
+    } as unknown as HTMLElement;
+    drawSelectedElement(negativeElement);
     expect(draw).toHaveBeenCalled();
   });
 
@@ -83,8 +83,8 @@ describe("box-model visualizer", () => {
       marginLeft: "1%",
       marginRight: "1vw",
     };
-    (global.getComputedStyle as any).mockReturnValue(differentUnitsStyle);
-    drawSelectedElement(mockElement as any);
+    (global.getComputedStyle as Mock).mockReturnValue(differentUnitsStyle);
+    drawSelectedElement(mockElement);
     expect(draw).toHaveBeenCalled();
   });
 
@@ -100,8 +100,8 @@ describe("box-model visualizer", () => {
       paddingLeft: "0px",
       paddingRight: "0px",
     };
-    (global.getComputedStyle as any).mockReturnValue(noSpacingStyle);
-    drawSelectedElement(mockElement as any);
+    (global.getComputedStyle as Mock).mockReturnValue(noSpacingStyle);
+    drawSelectedElement(mockElement);
     expect(draw).toHaveBeenCalled();
   });
 });

@@ -26,9 +26,12 @@ const getOutputAndShorthandOutput = (node: HTMLElement) => {
   const output: Obj = {};
   const shorthandOutput: Obj = {};
 
+  // eslint-disable-next-line @typescript-eslint/prefer-for-of
   for (let sIndex = 0; sIndex < stylesheets.length; sIndex++) {
     const stylesheet = stylesheets[sIndex];
     const rules = stylesheet.cssRules || stylesheet.rules;
+
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     for (let rIndex = 0; rIndex < rules.length; rIndex++) {
       const { selectorText, style } = rules[rIndex] as CSSStyleRule;
       if (node?.matches(selectorText)) {
@@ -37,14 +40,14 @@ const getOutputAndShorthandOutput = (node: HTMLElement) => {
           style.getPropertyValue(prop),
         );
 
-        for (let property of SHORTHAND_PROPERTIES) {
+        for (const property of SHORTHAND_PROPERTIES) {
           const value = style.getPropertyValue(property);
           if (value) {
             shorthandOutput[property] = value;
           }
         }
 
-        for (let property of properties) {
+        for (const property of properties) {
           const value = style.getPropertyValue(property);
           if (value) {
             output[property] = value;
