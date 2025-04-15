@@ -61,7 +61,7 @@ jobs:
             **/*/storybook-static
           key: ${{ runner.os }}-build-${{ github.sha }}
 
-      - name: Install Dependencies
+      - name: Missed cache, so build
         if: steps.cache.outputs.cache-hit != 'true'
         shell: bash
         run: pnpm build
@@ -74,6 +74,7 @@ jobs:
 
       - name: 👏 Run release script
         env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           pnpm release
