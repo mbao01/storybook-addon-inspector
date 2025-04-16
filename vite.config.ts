@@ -2,23 +2,13 @@ import { resolve } from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
 import { globalPackages as globalManagerPackages } from "storybook/internal/manager/globals";
 import { globalPackages as globalPreviewPackages } from "storybook/internal/preview/globals";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    cssInjectedByJsPlugin({
-      jsAssetsFilterFunction: function customJsAssetsfilterFunction(
-        outputChunk,
-      ) {
-        return outputChunk.fileName.startsWith("preview.");
-      },
-    }),
-  ],
+  plugins: [react(), tailwindcss(), libInjectCss()],
   build: {
     lib: {
       entry: {
