@@ -1,97 +1,93 @@
-@import "tailwindcss";
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
+@import "tailwindcss" prefix(ia);
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
   [data-radix-popper-content-wrapper] {
-    @apply fixed top-4 right-4 z-50;
+    @apply ia:fixed ia:top-4 ia:right-4 ia:z-50;
   }
 }
 
 @layer base {
   :root {
-    --background: #ffffff;
-    --foreground: #0f172a;
+    --ia-background: #ffffff;
+    --ia-foreground: #0f172a;
 
-    --card: #ffffff;
-    --card-foreground: #0f172a;
+    --ia-card: #ffffff;
+    --ia-card-foreground: #0f172a;
 
-    --popover: #ffffff;
-    --popover-foreground: #0f172a;
+    --ia-popover: #ffffff;
+    --ia-popover-foreground: #0f172a;
 
-    --primary: #3b82f6;
-    --primary-foreground: #f8fafc;
+    --ia-primary: #3b82f6;
+    --ia-primary-foreground: #f8fafc;
 
-    --secondary: #f1f5f9;
-    --secondary-foreground: #1e293b;
+    --ia-secondary: #f1f5f9;
+    --ia-secondary-foreground: #1e293b;
 
-    --muted: #f1f5f9;
-    --muted-foreground: #64748b;
+    --ia-muted: #f1f5f9;
+    --ia-muted-foreground: #64748b;
 
-    --accent: #f1f5f9;
-    --accent-foreground: #1e293b;
+    --ia-accent: #f1f5f9;
+    --ia-accent-foreground: #1e293b;
 
-    --destructive: #ef4444;
-    --destructive-foreground: #f8fafc;
+    --ia-destructive: #ef4444;
+    --ia-destructive-foreground: #f8fafc;
 
-    --border: #e2e8f0;
-    --input: #e2e8f0;
-    --ring: #3b82f6;
+    --ia-border: #e2e8f0;
+    --ia-input: #e2e8f0;
+    --ia-ring: #3b82f6;
 
-    --radius: 0.5rem;
+    --ia-radius: 0.5rem;
   }
 
   .dark {
-    --background: #0f172a;
-    --foreground: #f8fafc;
+    --ia-background: #0f172a;
+    --ia-foreground: #f8fafc;
 
-    --card: #0f172a;
-    --card-foreground: #f8fafc;
+    --ia-card: #0f172a;
+    --ia-card-foreground: #f8fafc;
 
-    --popover: #0f172a;
-    --popover-foreground: #f8fafc;
+    --ia-popover: #0f172a;
+    --ia-popover-foreground: #f8fafc;
 
-    --primary: #3b82f6;
-    --primary-foreground: #0f172a;
+    --ia-primary: #3b82f6;
+    --ia-primary-foreground: #0f172a;
 
-    --secondary: #1e293b;
-    --secondary-foreground: #f8fafc;
+    --ia-secondary: #1e293b;
+    --ia-secondary-foreground: #f8fafc;
 
-    --muted: #1e293b;
-    --muted-foreground: #94a3b8;
+    --ia-muted: #1e293b;
+    --ia-muted-foreground: #94a3b8;
 
-    --accent: #1e293b;
-    --accent-foreground: #f8fafc;
+    --ia-accent: #1e293b;
+    --ia-accent-foreground: #f8fafc;
 
-    --destructive: #7f1d1d;
-    --destructive-foreground: #f8fafc;
+    --ia-destructive: #7f1d1d;
+    --ia-destructive-foreground: #f8fafc;
 
-    --border: #1e293b;
-    --input: #1e293b;
-    --ring: #3b82f6;
+    --ia-border: #1e293b;
+    --ia-input: #1e293b;
+    --ia-ring: #3b82f6;
   }
 }
 
 @layer base {
   * {
-    @apply border-gray-200;
+    @apply ia:border-gray-200;
   }
 
   .dark * {
-    @apply border-gray-800;
+    @apply ia:border-gray-800;
   }
 
   body {
-    @apply bg-white text-gray-900;
+    @apply ia:bg-white ia:text-gray-900;
   }
 
   .dark body {
-    @apply bg-gray-900 text-white;
+    @apply ia:bg-gray-900 ia:text-white;
   }
 }
 
@@ -102,39 +98,39 @@ body {
 
 /* Utility classes for component styling */
 @layer components {
-  .bg-popover {
+  .ia\:bg-popover {
     background-color: var(--popover);
   }
 
-  .text-muted-foreground {
+  .ia\:text-muted-foreground {
     color: var(--muted-foreground);
   }
 
-  .bg-muted {
+  .ia\:bg-muted {
     background-color: var(--muted);
   }
 
-  .text-emerald-500 {
+  .ia\:text-emerald-500 {
     color: #10b981;
   }
 
-  .text-emerald-600 {
+  .ia\:text-emerald-600 {
     color: #059669;
   }
 
-  .text-violet-500 {
+  .ia\:text-violet-500 {
     color: #8b5cf6;
   }
 
-  .text-violet-600 {
+  .ia\:text-violet-600 {
     color: #7c3aed;
   }
 
-  .text-sky-500 {
+  .ia\:text-sky-500 {
     color: #0ea5e9;
   }
 
-  .text-sky-600 {
+  .ia\:text-sky-600 {
     color: #0284c7;
   }
 }
