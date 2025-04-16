@@ -134,6 +134,6 @@ describe("CSSPropertiesPopover", () => {
     fireEvent.click(headerButton);
 
     // Should have collapsed width
-    expect(popoverContent).toHaveClass("ia:w-[172px]");
+    expect(popoverContent).toHaveClass("ia:w-[180px]");
   });
 });
