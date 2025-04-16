@@ -60,8 +60,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: |
-            **/*/dist
-            **/*/storybook-static
+            dist
+            storybook-static
           key: ${{ runner.os }}-build-${{ github.sha }}
 
       - name: Missed cache, so build
