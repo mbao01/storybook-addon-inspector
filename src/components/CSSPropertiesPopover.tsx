@@ -45,17 +45,17 @@ export const CSSPropertiesPopover = ({
   const groups = [
     {
       title: "Tokens",
-      icon: <Paintbrush className="size-4 text-emerald-500" />,
+      icon: <Paintbrush className="ia:size-4 ia:text-emerald-500" />,
       properties: tokens,
     },
     {
       title: "Variables",
-      icon: <Variable className="size-4 text-violet-500" />,
+      icon: <Variable className="ia:size-4 ia:text-violet-500" />,
       properties: variables,
     },
     {
       title: "Computed",
-      icon: <Code className="size-4 text-sky-500" />,
+      icon: <Code className="ia:size-4 ia:text-sky-500" />,
       properties: computed,
     },
   ].filter(({ properties }) => properties.length > 0);
@@ -65,39 +65,39 @@ export const CSSPropertiesPopover = ({
       <PopoverContent
         id={id}
         className={cn(
-          "fixed top-9 right-1 z-50 w-[350px] p-0 bg-white dark:bg-gray-900 rounded-tl-none!",
+          "ia:fixed ia:top-9 ia:right-1 ia:z-50 ia:w-[350px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none!",
           {
-            "border-gray-200 dark:border-gray-800": isExpanded,
-            "w-[172px]": !isExpanded,
+            "ia:border-gray-200 ia:dark:border-gray-800": isExpanded,
+            "ia:w-[172px]": !isExpanded,
           },
         )}
       >
-        <div className="relative">
-          <div className="absolute -top-7.5 left-0 right-4 flex items-center w-[172px]">
+        <div className="ia:relative">
+          <div className="ia:absolute ia:-top-7.5 ia:left-0 ia:right-4 ia:flex ia:items-center ia:w-[172px]">
             <button
               tabIndex={-1}
               type="button"
               onClick={() => setExpanded((e) => !e)}
-              className="bg-white dark:bg-gray-900 text-gray-900/60 dark:text-white/60 px-3 py-1.5 -ml-px text-xs font-medium rounded-t-lg border border-gray-200 dark:border-gray-800 border-b-0 cursor-pointer"
+              className="ia:bg-white ia:dark:bg-gray-900 ia:text-gray-900/60 ia:dark:text-white/60 ia:px-3 ia:py-1.5 ia:-ml-px ia:text-xs ia:font-medium ia:rounded-t-lg ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:border-b-0 ia:cursor-pointer"
             >
               CSS Property Inspector{" "}
               {isExpanded ? (
-                <ChevronDown className="size-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+                <ChevronDown className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0" />
               ) : (
-                <ChevronRight className="size-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+                <ChevronRight className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0" />
               )}
             </button>
           </div>
 
           {isExpanded && (
-            <div className="relative h-[400px]">
-              <ScrollArea className="h-full pr-3">
-                <div className="space-y-1">
+            <div className="ia:relative ia:h-[400px]">
+              <ScrollArea className="ia:h-full ia:pr-3">
+                <div className="ia:space-y-1">
                   {groups.map(({ title, icon, properties }, index) => {
                     return (
                       <Fragment key={`${title}-${index}`}>
                         {index > 0 && (
-                          <Separator className="my-1 bg-gray-200 dark:bg-gray-800" />
+                          <Separator className="ia:my-1 ia:bg-gray-200 ia:dark:bg-gray-800" />
                         )}
                         <PropertySection
                           title={title}
@@ -109,7 +109,7 @@ export const CSSPropertiesPopover = ({
                   })}
 
                   {groups.length === 0 && (
-                    <div className="py-6 text-sm text-center text-gray-500 dark:text-gray-400">
+                    <div className="ia:py-6 ia:text-sm ia:text-center ia:text-gray-500 ia:dark:text-gray-400">
                       No CSS properties found
                     </div>
                   )}
@@ -132,30 +132,32 @@ type PropertySectionProps = {
 const PropertySection = ({ title, icon, properties }: PropertySectionProps) => {
   const [isExpanded, setExpanded] = useState(true);
   return (
-    <div className="w-full">
+    <div className="ia:w-full">
       <button
         type="button"
         tabIndex={-1}
         onClick={() => setExpanded((e) => !e)}
-        className="sticky top-0 z-10 bg-white dark:bg-gray-900 w-full px-4 py-2 flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 text-left"
+        className="ia:sticky ia:top-0 ia:z-10 ia:bg-white ia:dark:bg-gray-900 ia:w-full ia:px-4 ia:py-2 ia:flex ia:items-center ia:gap-2 ia:cursor-pointer ia:hover:bg-gray-100 ia:dark:hover:bg-gray-800 ia:text-left"
       >
         {isExpanded ? (
-          <ChevronDown className="size-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+          <ChevronDown className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0" />
         ) : (
-          <ChevronRight className="size-4 text-gray-500 dark:text-gray-400 flex-shrink-0" />
+          <ChevronRight className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0" />
         )}
         {icon}
-        <h3 className="font-medium text-gray-900 dark:text-white">{title}</h3>
+        <h3 className="ia:font-medium ia:text-gray-900 ia:dark:text-white">
+          {title}
+        </h3>
         <Badge
           variant="outline"
-          className="ml-auto border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300"
+          className="ia:ml-auto ia:border-gray-200 ia:dark:border-gray-700 ia:text-gray-700 ia:dark:text-gray-300"
         >
           {properties.length}
         </Badge>
       </button>
 
       {isExpanded && (
-        <div className="space-y-2 px-4 py-2">
+        <div className="ia:space-y-2 ia:px-4 ia:py-2">
           {properties.map((prop, index) => (
             <PropertyItem key={`${prop.property}-${index}`} property={prop} />
           ))}
@@ -167,36 +169,42 @@ const PropertySection = ({ title, icon, properties }: PropertySectionProps) => {
 
 const PropertyItem = ({ property }: { property: CSSPropertyValue }) => {
   return (
-    <div className="rounded-md border border-gray-200 dark:border-gray-800 p-2 text-sm bg-white dark:bg-gray-900">
-      <div className="font-medium text-gray-900 dark:text-white">
+    <div className="ia:rounded-md ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:p-2 ia:text-sm ia:bg-white ia:dark:bg-gray-900">
+      <div className="ia:font-medium ia:text-gray-900 ia:dark:text-white">
         {property.property}
       </div>
-      <div className="grid grid-cols-2 gap-x-2 gap-y-1 mt-1 text-xs">
+      <div className="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs">
         {property.value && (
           <>
-            <span className="text-gray-500 dark:text-gray-400">Value:</span>
+            <span className="ia:text-gray-500 ia:dark:text-gray-400">
+              Value:
+            </span>
             <ColorValue value={property.value} />
           </>
         )}
         {property.token && (
           <>
-            <span className="text-gray-500 dark:text-gray-400">Token:</span>
-            <span className="font-mono text-emerald-600 dark:text-emerald-500">
+            <span className="ia:text-gray-500 ia:dark:text-gray-400">
+              Token:
+            </span>
+            <span className="ia:font-mono ia:text-emerald-600 ia:dark:text-emerald-500">
               {property.token}
             </span>
           </>
         )}
         {property.variable && (
           <>
-            <span className="text-gray-500 dark:text-gray-400">Variable:</span>
-            <span className="font-mono text-violet-600 dark:text-violet-500">
+            <span className="ia:text-gray-500 ia:dark:text-gray-400">
+              Variable:
+            </span>
+            <span className="ia:font-mono ia:text-violet-600 ia:dark:text-violet-500">
               {property.variable}
             </span>
           </>
         )}
         {property.variableValue && (
           <>
-            <span className="text-gray-500 dark:text-gray-400">
+            <span className="ia:text-gray-500 ia:dark:text-gray-400">
               Variable Value:
             </span>
             <ColorValue value={property.variableValue} />
@@ -204,7 +212,9 @@ const PropertyItem = ({ property }: { property: CSSPropertyValue }) => {
         )}
         {property.computed && (
           <>
-            <span className="text-gray-500 dark:text-gray-400">Computed:</span>
+            <span className="ia:text-gray-500 ia:dark:text-gray-400">
+              Computed:
+            </span>
             <ColorValue value={property.computed} />
           </>
         )}
@@ -217,11 +227,11 @@ const ColorValue = ({ value }: { value: string }) => {
   const isColor = isValidColor(value);
 
   return (
-    <div className="flex items-center gap-1.5">
+    <div className="ia:flex ia:items-center ia:gap-1.5">
       {isColor && (
         <div
           data-testid="color-swatch"
-          className="size-3.5 rounded-sm border border-gray-300 dark:border-gray-700 flex-shrink-0"
+          className="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
           style={{
             backgroundColor: value,
             boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.05)",
@@ -229,7 +239,7 @@ const ColorValue = ({ value }: { value: string }) => {
         />
       )}
       <span
-        className={`font-mono ${isColor ? "flex-1" : ""} text-gray-900 dark:text-gray-100`}
+        className={`ia:font-mono ${isColor ? "ia:flex-1" : ""} ia:text-gray-900 ia:dark:text-gray-100`}
       >
         {value}
       </span>

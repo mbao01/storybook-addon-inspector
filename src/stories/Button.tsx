@@ -37,7 +37,7 @@ export const Button = ({
     ? "storybook-button--primary"
     : "storybook-button--secondary";
   return (
-    <div className="flex flex-col justify-start items-start gap-16">
+    <div className="ia:flex ia:flex-col ia:justify-start ia:items-start ia:gap-16">
       <button
         type="button"
         className={["storybook-button", `storybook-button--${size}`, mode].join(

@@ -11,10 +11,10 @@ const ScrollArea = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <ScrollAreaPrimitive.Root
     ref={ref}
-    className={cn("relative overflow-hidden", className)}
+    className={cn("ia:relative ia:overflow-hidden", className)}
     {...props}
   >
-    <ScrollAreaPrimitive.Viewport className="h-full w-full rounded-[inherit]">
+    <ScrollAreaPrimitive.Viewport className="ia:h-full ia:w-full ia:rounded-[inherit]">
       {children}
     </ScrollAreaPrimitive.Viewport>
     <ScrollBar />
@@ -31,16 +31,16 @@ const ScrollBar = React.forwardRef<
     ref={ref}
     orientation={orientation}
     className={cn(
-      "flex touch-none select-none transition-colors bg-gray-50 hover:bg-gray-100 dark:bg-gray-50/10 dark:hover:bg-gray-100/20",
+      "ia:flex ia:touch-none ia:select-none ia:transition-colors ia:bg-gray-50 ia:hover:bg-gray-100 ia:dark:bg-gray-50/10 ia:dark:hover:bg-gray-100/20",
       orientation === "vertical" &&
-        "h-full w-2.5 border-l border-l-transparent p-[1px]",
+        "ia:h-full ia:w-2.5 ia:border-l ia:border-l-transparent ia:p-[1px]",
       orientation === "horizontal" &&
-        "h-2.5 flex-col border-t border-t-transparent p-[1px]",
+        "ia:h-2.5 ia:flex-col ia:border-t ia:border-t-transparent ia:p-[1px]",
       className,
     )}
     {...props}
   >
-    <ScrollAreaPrimitive.ScrollAreaThumb className="relative flex-1 rounded-full bg-gray-400 dark:bg-muted" />
+    <ScrollAreaPrimitive.ScrollAreaThumb className="ia:relative ia:flex-1 ia:rounded-full ia:bg-gray-400 ia:dark:bg-muted" />
   </ScrollAreaPrimitive.ScrollAreaScrollbar>
 ));
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName;
