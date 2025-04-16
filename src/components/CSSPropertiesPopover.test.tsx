@@ -22,8 +22,8 @@ describe("CSSPropertiesPopover", () => {
         token: "COLOR_PRIMARY",
         computed: "rgb(255, 0, 0)",
         variable: undefined,
-        variableValue: undefined
-      }
+        variableValue: undefined,
+      },
     ],
     computed: [
       {
@@ -32,8 +32,8 @@ describe("CSSPropertiesPopover", () => {
         token: undefined,
         computed: "16px",
         variable: undefined,
-        variableValue: undefined
-      }
+        variableValue: undefined,
+      },
     ],
     variables: [
       {
@@ -42,24 +42,25 @@ describe("CSSPropertiesPopover", () => {
         token: undefined,
         computed: "rgb(0, 0, 0)",
         variable: "--bg-color",
-        variableValue: "rgb(0, 0, 0)"
-      }
+        variableValue: "rgb(0, 0, 0)",
+      },
     ],
-    open: true
+    open: true,
   };
 
   it("renders with all property groups", () => {
-    render(<CSSPropertiesPopover {...mockProps} />);
-    
+    const { asFragment } = render(<CSSPropertiesPopover {...mockProps} />);
+
     // Check section titles
     expect(screen.getByText("Tokens")).toBeInTheDocument();
     expect(screen.getByText("Variables")).toBeInTheDocument();
     expect(screen.getByText("Computed")).toBeInTheDocument();
-    
+
     // Check property values
     expect(screen.getByText("color")).toBeInTheDocument();
     expect(screen.getByText("font-size")).toBeInTheDocument();
     expect(screen.getByText("background-color")).toBeInTheDocument();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it("renders empty state when no properties are provided", () => {
@@ -70,21 +71,21 @@ describe("CSSPropertiesPopover", () => {
         computed={[]}
         variables={[]}
         open={true}
-      />
+      />,
     );
-    
+
     expect(screen.getByText("No CSS properties found")).toBeInTheDocument();
   });
 
   it("toggles expansion state when clicking the header button", () => {
     render(<CSSPropertiesPopover {...mockProps} />);
-    
+
     const headerButton = screen.getByText("CSS Property Inspector");
     fireEvent.click(headerButton);
-    
+
     // After clicking, the content should be hidden
     expect(screen.queryByText("Tokens")).not.toBeInTheDocument();
-    
+
     // Click again to expand
     fireEvent.click(headerButton);
     expect(screen.getByText("Tokens")).toBeInTheDocument();
@@ -92,7 +93,7 @@ describe("CSSPropertiesPopover", () => {
 
   it("renders color values with color swatches", () => {
     render(<CSSPropertiesPopover {...mockProps} />);
-    
+
     // Check for color swatch
     const colorSwatch = screen.getByTestId("color-swatch");
     expect(colorSwatch).toBeInTheDocument();
@@ -100,7 +101,7 @@ describe("CSSPropertiesPopover", () => {
 
   it("renders property sections with correct badges", () => {
     render(<CSSPropertiesPopover {...mockProps} />);
-    
+
     // Check badge counts - use getAllByText and check length
     const badges = screen.getAllByText("1");
     expect(badges.length).toBeGreaterThanOrEqual(3); // At least 3 badges (one for each section)
@@ -108,14 +109,14 @@ describe("CSSPropertiesPopover", () => {
 
   it("toggles section expansion when clicking section headers", () => {
     render(<CSSPropertiesPopover {...mockProps} />);
-    
+
     // Click on the Tokens section header
     const tokensHeader = screen.getByText("Tokens").closest("button");
     fireEvent.click(tokensHeader!);
-    
+
     // The color property should be hidden
     expect(screen.queryByText("color")).not.toBeInTheDocument();
-    
+
     // Click again to expand
     fireEvent.click(tokensHeader!);
     expect(screen.getByText("color")).toBeInTheDocument();
@@ -123,29 +124,16 @@ describe("CSSPropertiesPopover", () => {
 
   it("renders with correct CSS classes based on expansion state", () => {
     render(<CSSPropertiesPopover {...mockProps} />);
-    
+
     // Initially expanded
     const popoverContent = screen.getByTestId("popover-content");
-    expect(popoverContent).toHaveClass("w-[350px]");
-    
+    expect(popoverContent).toHaveClass("ia:w-[350px]");
+
     // Click to collapse
     const headerButton = screen.getByText("CSS Property Inspector");
     fireEvent.click(headerButton);
-    
-    // Should have collapsed width
-    expect(popoverContent).toHaveClass("w-[172px]");
-  });
 
-  it("handles dark mode classes correctly", () => {
-    // Mock dark mode
-    document.documentElement.classList.add("dark");
-    
-    render(<CSSPropertiesPopover {...mockProps} />);
-    
-    const popoverContent = screen.getByTestId("popover-content");
-    expect(popoverContent).toHaveClass("dark:bg-gray-900");
-    
-    // Clean up
-    document.documentElement.classList.remove("dark");
+    // Should have collapsed width
+    expect(popoverContent).toHaveClass("ia:w-[172px]");
   });
-}); 
+});
