@@ -1,6 +1,6 @@
 :root {
-  --background: #8e7ffd;
-  --padding: 0.5rem;
+  --ia-background: #8e7ffd;
+  --ia-padding: 0.5rem;
   --nk-button-border-radius: 2rem;
 }
 
@@ -15,7 +15,7 @@
 }
 .storybook-button--primary {
   color: white;
-  background-color: var(--background);
+  background-color: var(--ia-background);
 }
 .storybook-button--secondary {
   color: #333;
@@ -28,7 +28,7 @@
 }
 .storybook-button--medium {
   font-size: 14px;
-  padding: var(--padding);
+  padding: var(--ia-padding);
 }
 .storybook-button--large {
   font-size: 16px;

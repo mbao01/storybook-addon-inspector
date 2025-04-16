@@ -1,13 +1,14 @@
+import { resolve } from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
-import { resolve } from "path";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
 import { globalPackages as globalManagerPackages } from "storybook/internal/manager/globals";
 import { globalPackages as globalPreviewPackages } from "storybook/internal/preview/globals";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), libInjectCss()],
   build: {
     lib: {
       entry: {
@@ -22,6 +23,7 @@ export default defineConfig({
       external: [
         "react",
         "react-dom",
+        "react/jsx-runtime",
         "storybook",
         ...globalManagerPackages,
         ...globalPreviewPackages,
@@ -31,6 +33,7 @@ export default defineConfig({
           react: "React",
           "react-dom": "ReactDOM",
           storybook: "Storybook",
+          "react/jsx-runtime": "ReactJsxRuntime",
         },
       },
     },

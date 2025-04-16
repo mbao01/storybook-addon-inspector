@@ -1,0 +1,436 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
+<DocumentFragment>
+  <div>
+    <div
+      class="ia:fixed ia:top-9 ia:right-1 ia:z-50 ia:w-[350px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none! ia:border-gray-200 ia:dark:border-gray-800"
+      data-testid="popover-content"
+      id="test-popover"
+    >
+      <div
+        class="ia:relative"
+      >
+        <div
+          class="ia:absolute ia:-top-7.5 ia:left-0 ia:right-4 ia:flex ia:items-center ia:w-[180px]"
+        >
+          <button
+            class="ia:flex ia:gap-2 ia:items-center ia:justify-between ia:w-full ia:bg-white ia:dark:bg-gray-900 ia:text-gray-900/60 ia:dark:text-white/60 ia:px-3 ia:py-1.5 ia:-ml-px ia:text-xs ia:font-medium ia:rounded-t-lg ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:border-b-0 ia:cursor-pointer"
+            tabindex="-1"
+            type="button"
+          >
+            CSS Property Inspector 
+            <svg
+              class="lucide lucide-chevron-down ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0"
+              fill="none"
+              height="24"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m6 9 6 6 6-6"
+              />
+            </svg>
+          </button>
+        </div>
+        <div
+          class="ia:relative ia:h-[400px]"
+        >
+          <div
+            class="ia:relative ia:overflow-hidden ia:h-full ia:pr-3"
+            dir="ltr"
+            style="position: relative; --radix-scroll-area-corner-width: 0px; --radix-scroll-area-corner-height: 0px;"
+          >
+            <style>
+              [data-radix-scroll-area-viewport]{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}[data-radix-scroll-area-viewport]::-webkit-scrollbar{display:none}
+            </style>
+            <div
+              class="ia:h-full ia:w-full ia:rounded-[inherit]"
+              data-radix-scroll-area-viewport=""
+              style="overflow-x: hidden; overflow-y: scroll;"
+            >
+              <div
+                style="min-width: 100%; display: table;"
+              >
+                <div
+                  class="ia:space-y-1"
+                >
+                  <div
+                    class="ia:w-full"
+                  >
+                    <button
+                      class="ia:sticky ia:top-0 ia:z-10 ia:bg-white ia:dark:bg-gray-900 ia:w-full ia:px-4 ia:py-2 ia:flex ia:items-center ia:gap-2 ia:cursor-pointer ia:hover:bg-gray-100 ia:dark:hover:bg-gray-800 ia:text-left"
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        class="lucide lucide-chevron-down ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0"
+                        fill="none"
+                        height="24"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m6 9 6 6 6-6"
+                        />
+                      </svg>
+                      <svg
+                        class="lucide lucide-paintbrush ia:size-4 ia:text-emerald-500"
+                        fill="none"
+                        height="24"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m14.622 17.897-10.68-2.913"
+                        />
+                        <path
+                          d="M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z"
+                        />
+                        <path
+                          d="M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15"
+                        />
+                      </svg>
+                      <h3
+                        class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                      >
+                        Tokens
+                      </h3>
+                      <div
+                        class="ia:inline-flex ia:items-center ia:rounded-full ia:border ia:px-2.5 ia:py-0.5 ia:text-xs ia:font-semibold ia:transition-colors ia:focus:outline-none ia:focus:ring-2 ia:focus:ring-ring ia:focus:ring-offset-2 ia:ml-auto ia:border-gray-200 ia:dark:border-gray-700 ia:text-gray-700 ia:dark:text-gray-300"
+                      >
+                        1
+                      </div>
+                    </button>
+                    <div
+                      class="ia:space-y-2 ia:px-4 ia:py-2"
+                    >
+                      <div
+                        class="ia:rounded-md ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:p-2 ia:text-sm ia:bg-white ia:dark:bg-gray-900"
+                      >
+                        <div
+                          class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                        >
+                          color
+                        </div>
+                        <div
+                          class="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs"
+                        >
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Value:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: red; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
+                            <span
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              red
+                            </span>
+                          </div>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Token:
+                          </span>
+                          <span
+                            class="ia:font-mono ia:text-emerald-600 ia:dark:text-emerald-500"
+                          >
+                            COLOR_PRIMARY
+                          </span>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Computed:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <span
+                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              rgb(255, 0, 0)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="ia:shrink-0 ia:h-[1px] ia:w-full ia:my-1 ia:bg-gray-200 ia:dark:bg-gray-800"
+                    data-orientation="horizontal"
+                    role="none"
+                  />
+                  <div
+                    class="ia:w-full"
+                  >
+                    <button
+                      class="ia:sticky ia:top-0 ia:z-10 ia:bg-white ia:dark:bg-gray-900 ia:w-full ia:px-4 ia:py-2 ia:flex ia:items-center ia:gap-2 ia:cursor-pointer ia:hover:bg-gray-100 ia:dark:hover:bg-gray-800 ia:text-left"
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        class="lucide lucide-chevron-down ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0"
+                        fill="none"
+                        height="24"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m6 9 6 6 6-6"
+                        />
+                      </svg>
+                      <svg
+                        class="lucide lucide-variable ia:size-4 ia:text-violet-500"
+                        fill="none"
+                        height="24"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M8 21s-4-3-4-9 4-9 4-9"
+                        />
+                        <path
+                          d="M16 3s4 3 4 9-4 9-4 9"
+                        />
+                        <line
+                          x1="15"
+                          x2="9"
+                          y1="9"
+                          y2="15"
+                        />
+                        <line
+                          x1="9"
+                          x2="15"
+                          y1="9"
+                          y2="15"
+                        />
+                      </svg>
+                      <h3
+                        class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                      >
+                        Variables
+                      </h3>
+                      <div
+                        class="ia:inline-flex ia:items-center ia:rounded-full ia:border ia:px-2.5 ia:py-0.5 ia:text-xs ia:font-semibold ia:transition-colors ia:focus:outline-none ia:focus:ring-2 ia:focus:ring-ring ia:focus:ring-offset-2 ia:ml-auto ia:border-gray-200 ia:dark:border-gray-700 ia:text-gray-700 ia:dark:text-gray-300"
+                      >
+                        1
+                      </div>
+                    </button>
+                    <div
+                      class="ia:space-y-2 ia:px-4 ia:py-2"
+                    >
+                      <div
+                        class="ia:rounded-md ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:p-2 ia:text-sm ia:bg-white ia:dark:bg-gray-900"
+                      >
+                        <div
+                          class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                        >
+                          background-color
+                        </div>
+                        <div
+                          class="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs"
+                        >
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Value:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <span
+                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              var(--bg-color)
+                            </span>
+                          </div>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Variable:
+                          </span>
+                          <span
+                            class="ia:font-mono ia:text-violet-600 ia:dark:text-violet-500"
+                          >
+                            --bg-color
+                          </span>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Variable Value:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <span
+                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              rgb(0, 0, 0)
+                            </span>
+                          </div>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Computed:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <span
+                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              rgb(0, 0, 0)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="ia:shrink-0 ia:h-[1px] ia:w-full ia:my-1 ia:bg-gray-200 ia:dark:bg-gray-800"
+                    data-orientation="horizontal"
+                    role="none"
+                  />
+                  <div
+                    class="ia:w-full"
+                  >
+                    <button
+                      class="ia:sticky ia:top-0 ia:z-10 ia:bg-white ia:dark:bg-gray-900 ia:w-full ia:px-4 ia:py-2 ia:flex ia:items-center ia:gap-2 ia:cursor-pointer ia:hover:bg-gray-100 ia:dark:hover:bg-gray-800 ia:text-left"
+                      tabindex="-1"
+                      type="button"
+                    >
+                      <svg
+                        class="lucide lucide-chevron-down ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0"
+                        fill="none"
+                        height="24"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m6 9 6 6 6-6"
+                        />
+                      </svg>
+                      <svg
+                        class="lucide lucide-code ia:size-4 ia:text-sky-500"
+                        fill="none"
+                        height="24"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <polyline
+                          points="16 18 22 12 16 6"
+                        />
+                        <polyline
+                          points="8 6 2 12 8 18"
+                        />
+                      </svg>
+                      <h3
+                        class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                      >
+                        Computed
+                      </h3>
+                      <div
+                        class="ia:inline-flex ia:items-center ia:rounded-full ia:border ia:px-2.5 ia:py-0.5 ia:text-xs ia:font-semibold ia:transition-colors ia:focus:outline-none ia:focus:ring-2 ia:focus:ring-ring ia:focus:ring-offset-2 ia:ml-auto ia:border-gray-200 ia:dark:border-gray-700 ia:text-gray-700 ia:dark:text-gray-300"
+                      >
+                        1
+                      </div>
+                    </button>
+                    <div
+                      class="ia:space-y-2 ia:px-4 ia:py-2"
+                    >
+                      <div
+                        class="ia:rounded-md ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:p-2 ia:text-sm ia:bg-white ia:dark:bg-gray-900"
+                      >
+                        <div
+                          class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                        >
+                          font-size
+                        </div>
+                        <div
+                          class="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs"
+                        >
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Value:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <span
+                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              16px
+                            </span>
+                          </div>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Computed:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <span
+                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              16px
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
