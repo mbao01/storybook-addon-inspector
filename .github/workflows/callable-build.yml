@@ -35,8 +35,8 @@ jobs:
         id: cache
         with:
           path: |
-            **/*/dist
-            **/*/storybook-static
+            dist
+            storybook-static
           key: ${{ runner.os }}-build-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-build
