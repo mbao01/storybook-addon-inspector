@@ -24,7 +24,7 @@ export default defineConfig({
       entry: {
         index: resolve(__dirname, "src/index.ts"),
         preview: resolve(__dirname, "src/preview.ts"),
-        manager: resolve(__dirname, "src/manager.tsx"),
+        manager: resolve(__dirname, "src/manager.ts"),
         preset: resolve(__dirname, "src/preset.ts"),
       },
       formats: ["es", "cjs"],
