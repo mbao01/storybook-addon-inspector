@@ -8,6 +8,6 @@ export default addons.register(ADDON_ID, () => {
     type: types.TOOL,
     title: "Inspector",
     match: ({ viewMode, tabId }) => !tabId && viewMode === "story",
-    render: Tool,
+    render: () => <Tool />,
   });
 });
