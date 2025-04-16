@@ -68,17 +68,17 @@ export const CSSPropertiesPopover = ({
           "ia:fixed ia:top-9 ia:right-1 ia:z-50 ia:w-[350px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none!",
           {
             "ia:border-gray-200 ia:dark:border-gray-800": isExpanded,
-            "ia:w-[172px]": !isExpanded,
+            "ia:w-[180px]": !isExpanded,
           },
         )}
       >
         <div className="ia:relative">
-          <div className="ia:absolute ia:-top-7.5 ia:left-0 ia:right-4 ia:flex ia:items-center ia:w-[172px]">
+          <div className="ia:absolute ia:-top-7.5 ia:left-0 ia:right-4 ia:flex ia:items-center ia:w-[180px]">
             <button
               tabIndex={-1}
               type="button"
               onClick={() => setExpanded((e) => !e)}
-              className="ia:bg-white ia:dark:bg-gray-900 ia:text-gray-900/60 ia:dark:text-white/60 ia:px-3 ia:py-1.5 ia:-ml-px ia:text-xs ia:font-medium ia:rounded-t-lg ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:border-b-0 ia:cursor-pointer"
+              className="ia:flex ia:gap-2 ia:items-center ia:justify-between ia:w-full ia:bg-white ia:dark:bg-gray-900 ia:text-gray-900/60 ia:dark:text-white/60 ia:px-3 ia:py-1.5 ia:-ml-px ia:text-xs ia:font-medium ia:rounded-t-lg ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:border-b-0 ia:cursor-pointer"
             >
               CSS Property Inspector{" "}
               {isExpanded ? (
