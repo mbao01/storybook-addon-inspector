@@ -1,3 +1,15 @@
+# v0.0.5 (Thu Apr 17 2025)
+
+#### ⚠️ Pushed to `main`
+
+- update test ([@mbao01](https://github.com/mbao01))
+
+#### Authors: 1
+
+- Ayomide Bakare ([@mbao01](https://github.com/mbao01))
+
+---
+
 # v0.0.4 (Thu Apr 17 2025)
 
 #### 🐛 Bug Fix
