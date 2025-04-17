@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { init, clear, draw, rescale, destroy } from "./canvas";
+import { init, clear, draw, rescale, destroy, destroyAll } from "./canvas";
 import { global } from "@storybook/global";
 
 describe("canvas utility", () => {
@@ -157,6 +157,15 @@ describe("canvas utility", () => {
       mockCanvas.parentNode.removeChild.mockClear();
       destroy("selected");
       expect(mockCanvas.parentNode.removeChild).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("destroyAll", () => {
+    it("destroys both selected and hover canvases", () => {
+      init();
+      destroyAll();
+      expect(mockCanvas.parentNode.removeChild).toHaveBeenCalledTimes(2);
+      expect(mockCanvas.parentNode.removeChild).toHaveBeenCalledWith(mockCanvas);
     });
   });
 });
