@@ -1,3 +1,15 @@
+# v0.0.4 (Thu Apr 17 2025)
+
+#### 🐛 Bug Fix
+
+- Fix css variables [#6](https://github.com/mbao01/storybook-addon-inspector/pull/6) ([@mbao01](https://github.com/mbao01))
+
+#### Authors: 1
+
+- Ayomide Bakare ([@mbao01](https://github.com/mbao01))
+
+---
+
 # v0.0.3 (Wed Apr 16 2025)
 
 #### 🐛 Bug Fix
