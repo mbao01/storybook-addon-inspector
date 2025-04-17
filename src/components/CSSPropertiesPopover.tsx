@@ -269,7 +269,7 @@ const isValidColor = (value: string): boolean => {
 
   // Check for rgb/rgba colors
   if (
-    /^rgba?$$\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(?:,\s*(?:0?\.\d+|[01])\s*)?$$$/i.test(
+    /^rgba?\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*(?:,\s*(?:0?\.\d+|[01])\s*)?\)$/i.test(
       value,
     )
   ) {
@@ -278,7 +278,7 @@ const isValidColor = (value: string): boolean => {
 
   // Check for hsl/hsla colors
   if (
-    /^hsla?$$\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*(?:,\s*(?:0?\.\d+|[01])\s*)?$$$/i.test(
+    /^hsla?\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*(?:,\s*(?:0?\.\d+|[01])\s*)?\)$/i.test(
       value,
     )
   ) {
