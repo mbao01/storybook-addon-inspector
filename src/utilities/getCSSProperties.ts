@@ -84,6 +84,7 @@ type AppliedCSSVariablesParams = {
 
 const getAppliedCSSVariables = ({ styles }: AppliedCSSVariablesParams) => {
   const variables = Object.entries(styles).reduce((acc, [property, value]) => {
+    // eslint-disable-next-line no-useless-escape
     const matches = value.toString().matchAll(/var\(([0-9a-zA-Z_\-]*)\)/gi);
     const values = [...matches].map(([, v]) => v);
 
@@ -105,6 +106,7 @@ const getAppliedTokens = ({ styles }: AppliedTokensParams) => {
   const tokens = Object.entries(styles).reduce((acc, [property, value]) => {
     const matches = value
       .toString()
+      // eslint-disable-next-line no-useless-escape
       .matchAll(/var\(--nk-([0-9a-zA-Z_\-]*)\)/gi);
     const values = [...matches].map(([, v]) =>
       v.replaceAll("-", "_").toUpperCase(),

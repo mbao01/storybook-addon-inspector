@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getCSSProperties } from "./getCSSProperties";
 class MockCSSStyleRule {
-  cssRules = [];
+  cssRules: (MockCSSStyleRule | MockCSSLayerBlockRule)[] = [];
   type = 1; // STYLE_RULE
   selectorText: string;
   style: Record<string, string>;
@@ -11,7 +11,7 @@ class MockCSSStyleRule {
     selectorText,
     style,
   }: {
-    cssRules: any;
+    cssRules: (MockCSSStyleRule | MockCSSLayerBlockRule)[];
     selectorText: string;
     type: number;
     cssText: string;
@@ -49,7 +49,7 @@ class MockCSSLayerBlockRule {
   insertRule = vi.fn();
   deleteRule = vi.fn();
 
-  cssRules = [];
+  cssRules: (MockCSSStyleRule | MockCSSLayerBlockRule)[] = [];
   type = 0; // STYLE_RULE
   selectorText: string;
   style: Record<string, string>;
@@ -59,7 +59,7 @@ class MockCSSLayerBlockRule {
     selectorText,
     style,
   }: {
-    cssRules: any;
+    cssRules: (MockCSSStyleRule | MockCSSLayerBlockRule)[];
     selectorText: string;
     type: number;
     cssText: string;
@@ -79,12 +79,10 @@ describe("getCSSProperties", () => {
   let mockComputedStyle: CSSStyleDeclaration;
 
   beforeEach(() => {
-    // Assign to global window
-    // @ts-ignore
+    // @ts-expect well, CSSStyleRule is a live readonly property
     global.CSSStyleRule = MockCSSStyleRule;
 
-    // Assign to global window
-    // @ts-ignore
+    // @ts-expect well, CSSLayerBlockRule is a live readonly property
     global.CSSLayerBlockRule = MockCSSLayerBlockRule;
 
     // Mock element with matches method
@@ -124,6 +122,7 @@ describe("getCSSProperties", () => {
       },
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockLayerBlockRule = new (global.CSSStyleRule as any)({
       cssRules: [],
       selectorText: ".test",
@@ -134,7 +133,7 @@ describe("getCSSProperties", () => {
       parentStyleSheet: null,
     }) as unknown as CSSStyleRule;
 
-    // Mock CSSRule with style
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockLayerBlockStyleRule = new (global.CSSLayerBlockRule as any)({
       cssRules: [mockLayerBlockRule],
       selectorText: ".test",
@@ -144,6 +143,7 @@ describe("getCSSProperties", () => {
       parentStyleSheet: null,
     }) as unknown as CSSStyleRule;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockLayerBlockStyleRule2 = new (global.CSSLayerBlockRule as any)({
       cssRules: null,
       rules: [mockLayerBlockRule],
@@ -154,7 +154,7 @@ describe("getCSSProperties", () => {
       parentStyleSheet: null,
     }) as unknown as CSSStyleRule;
 
-    // Mock CSSRule with style
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mockRule = new (global.CSSStyleRule as any)({
       cssRules: [],
       selectorText: ".test",
