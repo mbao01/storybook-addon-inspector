@@ -8,6 +8,16 @@ describe("Preview", () => {
     // Check that the preview object has the expected structure
     expect(preview).toEqual({
       decorators: [withInspector],
+      globals: {
+        [PARAM_KEY]: false,
+      },
+      globalTypes: {
+        [PARAM_KEY]: {
+          name: PARAM_KEY,
+          description: "Enable or disable the inspector addon",
+          control: "boolean",
+        },
+      },
       initialGlobals: {
         [PARAM_KEY]: false,
       },
