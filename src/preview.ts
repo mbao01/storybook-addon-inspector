@@ -38,6 +38,16 @@ import "./stylesheets/index.css";
 
 const preview: ProjectAnnotations<Renderer> = {
   decorators: [withInspector],
+  globals: {
+    [PARAM_KEY]: false,
+  },
+  globalTypes: {
+    [PARAM_KEY]: {
+      name: PARAM_KEY,
+      description: "Enable or disable the inspector addon",
+      control: "boolean",
+    },
+  },
   initialGlobals: {
     [PARAM_KEY]: false,
   },
