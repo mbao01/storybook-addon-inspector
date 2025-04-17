@@ -67,7 +67,7 @@ export const CSSPropertiesPopover = ({
           "ia:fixed ia:top-9 ia:right-1 ia:z-50 ia:w-[372px] ia:lg:w-[420px] ia:xl:w-[460px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none!",
           {
             "ia:border-gray-200 ia:dark:border-gray-800": isExpanded,
-            "ia:w-[180px!": !isExpanded,
+            "ia:w-[180px]!": !isExpanded,
           },
         )}
       >
