@@ -29,7 +29,9 @@ const getOutputAndShorthandOutput = (node: HTMLElement) => {
   // eslint-disable-next-line @typescript-eslint/prefer-for-of
   for (let sIndex = 0; sIndex < stylesheets.length; sIndex++) {
     const stylesheet = stylesheets[sIndex];
-    const rules = stylesheet.cssRules || stylesheet.rules;
+    const rules = stylesheet.cssRules?.length
+      ? stylesheet.cssRules
+      : stylesheet.rules;
 
     processCSSRules(node, rules, output, shorthandOutput);
   }
@@ -124,8 +126,6 @@ export const getCSSProperties = (node: HTMLElement) => {
   const { variables } = getAppliedCSSVariables({ styles });
   const { tokens } = getAppliedTokens({ styles });
 
-  console.log("APplied tokens: ", tokens);
-
   const computed = getComputedStyle(node);
   const result = Object.entries(output).reduce((acc, [property, value]) => {
     const token = tokens[property];
@@ -153,10 +153,6 @@ export const getCSSProperties = (node: HTMLElement) => {
 
 const isSelectorValid = (selector: string) => {
   return selector && !selector.startsWith("--") && !selector.startsWith("*");
-};
-
-const isPropertyValid = (property: string) => {
-  return !property.startsWith("--") && property !== "*";
 };
 
 const isValueValid = (value: string) => {
@@ -202,17 +198,15 @@ const processCSSRules = (
           const isValidValue = isValueValid(value);
           if (isValidValue) {
             output[property] = value;
-            // } else {
-            // delete shorthandOutput[property];
           }
-          // }
         }
       }
     }
 
     if (styleRule instanceof CSSLayerBlockRule) {
-      const childRuleList =
-        styleRule.cssRules || (styleRule as unknown as CSSStyleSheet).rules;
+      const childRuleList = styleRule.cssRules?.length
+        ? styleRule.cssRules
+        : (styleRule as unknown as CSSStyleSheet).rules;
       if (childRuleList) {
         processCSSRules(node, childRuleList, output, shorthandOutput);
       }

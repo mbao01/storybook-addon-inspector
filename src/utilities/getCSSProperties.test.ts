@@ -1,5 +1,77 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { getCSSProperties } from "./getCSSProperties";
+class MockCSSStyleRule {
+  cssRules = [];
+  type = 1; // STYLE_RULE
+  selectorText: string;
+  style: Record<string, string>;
+
+  constructor({
+    cssRules,
+    selectorText,
+    style,
+  }: {
+    cssRules: any;
+    selectorText: string;
+    type: number;
+    cssText: string;
+    parentRule: null;
+    parentStyleSheet: null;
+    style: Record<string, string>;
+  }) {
+    this.cssRules = cssRules;
+    this.selectorText = selectorText;
+    this.style = style;
+  }
+
+  // Simulate setting a style property
+  setProperty(property: string, value: string) {
+    this.style[property] = value;
+  }
+
+  // Simulate removing a style property
+  removeProperty(property: string) {
+    delete this.style[property];
+  }
+
+  // toString simulation (optional)
+  toString() {
+    const styleString = Object.entries(this.style)
+      .map(([k, v]) => `${k}: ${v};`)
+      .join(" ");
+    return `${this.selectorText} { ${styleString} }`;
+  }
+}
+
+// Create a simple mock class
+class MockCSSLayerBlockRule {
+  name = "mock-layer";
+  insertRule = vi.fn();
+  deleteRule = vi.fn();
+
+  cssRules = [];
+  type = 0; // STYLE_RULE
+  selectorText: string;
+  style: Record<string, string>;
+
+  constructor({
+    cssRules,
+    selectorText,
+    style,
+  }: {
+    cssRules: any;
+    selectorText: string;
+    type: number;
+    cssText: string;
+    parentRule: null;
+    parentStyleSheet: null;
+    style: Record<string, string>;
+  }) {
+    this.cssRules = cssRules;
+    this.selectorText = selectorText;
+    this.style = style;
+  }
+}
 
 describe("getCSSProperties", () => {
   let mockElement: HTMLElement;
@@ -7,6 +79,14 @@ describe("getCSSProperties", () => {
   let mockComputedStyle: CSSStyleDeclaration;
 
   beforeEach(() => {
+    // Assign to global window
+    // @ts-ignore
+    global.CSSStyleRule = MockCSSStyleRule;
+
+    // Assign to global window
+    // @ts-ignore
+    global.CSSLayerBlockRule = MockCSSLayerBlockRule;
+
     // Mock element with matches method
     mockElement = {
       matches: vi.fn().mockReturnValue(true),
@@ -44,19 +124,50 @@ describe("getCSSProperties", () => {
       },
     };
 
+    const mockLayerBlockRule = new (global.CSSStyleRule as any)({
+      cssRules: [],
+      selectorText: ".test",
+      style: { ...mockStyle, color: "pink" },
+      type: 1,
+      cssText: "",
+      parentRule: null,
+      parentStyleSheet: null,
+    }) as unknown as CSSStyleRule;
+
     // Mock CSSRule with style
-    const mockRule = {
+    const mockLayerBlockStyleRule = new (global.CSSLayerBlockRule as any)({
+      cssRules: [mockLayerBlockRule],
+      selectorText: ".test",
+      type: 1,
+      cssText: "",
+      parentRule: null,
+      parentStyleSheet: null,
+    }) as unknown as CSSStyleRule;
+
+    const mockLayerBlockStyleRule2 = new (global.CSSLayerBlockRule as any)({
+      cssRules: null,
+      rules: [mockLayerBlockRule],
+      selectorText: ".test",
+      type: 1,
+      cssText: "",
+      parentRule: null,
+      parentStyleSheet: null,
+    }) as unknown as CSSStyleRule;
+
+    // Mock CSSRule with style
+    const mockRule = new (global.CSSStyleRule as any)({
+      cssRules: [],
       selectorText: ".test",
       style: mockStyle,
       type: 1,
       cssText: "",
       parentRule: null,
       parentStyleSheet: null,
-    } as unknown as CSSStyleRule;
+    }) as unknown as CSSStyleRule;
 
     // Mock stylesheet with rules
     const mockStyleSheet = {
-      cssRules: [mockRule],
+      cssRules: [mockRule, mockLayerBlockStyleRule],
       rules: [mockRule],
       ownerRule: null,
       type: "",
@@ -70,13 +181,21 @@ describe("getCSSProperties", () => {
       deleteRule: vi.fn(),
     } as unknown as CSSStyleSheet;
 
+    const mockStyleSheet2 = {
+      ...mockStyleSheet,
+      cssRules: null,
+      rules: [mockLayerBlockStyleRule2],
+    };
+
     // Mock StyleSheetList
     mockStyleSheets = {
-      length: 1,
+      length: 2,
       item: vi.fn().mockReturnValue(mockStyleSheet),
       [0]: mockStyleSheet,
+      [1]: mockStyleSheet2,
       [Symbol.iterator]: function* () {
         yield mockStyleSheet;
+        yield mockStyleSheet2;
       },
     } as unknown as StyleSheetList;
 
@@ -114,13 +233,13 @@ describe("getCSSProperties", () => {
   it("handles CSS variables", () => {
     const result = getCSSProperties(mockElement);
     expect(result.variables).toHaveProperty("--custom-var");
-    expect(result.variables["--custom-var"]).toBe("--value");
+    expect(result.variables["--custom-var"]).toStrictEqual(["--value"]);
   });
 
   it("handles CSS tokens", () => {
     const result = getCSSProperties(mockElement);
     expect(result.tokens).toHaveProperty("--token-var");
-    expect(result.tokens["--token-var"]).toBe("TEST_TOKEN");
+    expect(result.tokens["--token-var"]).toStrictEqual(["TEST_TOKEN"]);
   });
 
   it("returns empty result when no matching rules found", () => {
