@@ -1,5 +1,51 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`ScrollBar > renders scroll bar with horizontal orientation 1`] = `
+<DocumentFragment>
+  <div
+    class="ia:relative ia:overflow-hidden"
+    dir="ltr"
+    style="position: relative; --radix-scroll-area-corner-width: 0px; --radix-scroll-area-corner-height: 0px;"
+  >
+    <style>
+      [data-radix-scroll-area-viewport]{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}[data-radix-scroll-area-viewport]::-webkit-scrollbar{display:none}
+    </style>
+    <div
+      class="ia:h-full ia:w-full ia:rounded-[inherit]"
+      data-radix-scroll-area-viewport=""
+      style="overflow-x: scroll; overflow-y: scroll;"
+    >
+      <div
+        style="min-width: 100%; display: table;"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ScrollBar > renders scroll bar with vertical orientation 1`] = `
+<DocumentFragment>
+  <div
+    class="ia:relative ia:overflow-hidden"
+    dir="ltr"
+    style="position: relative; --radix-scroll-area-corner-width: 0px; --radix-scroll-area-corner-height: 0px;"
+  >
+    <style>
+      [data-radix-scroll-area-viewport]{scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;}[data-radix-scroll-area-viewport]::-webkit-scrollbar{display:none}
+    </style>
+    <div
+      class="ia:h-full ia:w-full ia:rounded-[inherit]"
+      data-radix-scroll-area-viewport=""
+      style="overflow-x: hidden; overflow-y: scroll;"
+    >
+      <div
+        style="min-width: 100%; display: table;"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`ScrollBar > renders scroll bar with vertical orientation by default 1`] = `
 <DocumentFragment>
   <div

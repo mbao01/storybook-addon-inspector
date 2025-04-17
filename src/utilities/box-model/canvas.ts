@@ -81,8 +81,12 @@ export function clear(type: CanvasType) {
     state[type].context.clearRect(
       0,
       0,
-      state[type].width ?? 0,
-      state[type].height ?? 0,
+      // NB there can be NaN or non nullish value here
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+      state[type].width || 0,
+      // NB there can be NaN or non nullish value here
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+      state[type].height || 0,
     );
   }
 }

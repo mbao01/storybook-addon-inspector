@@ -30,7 +30,27 @@ describe("ScrollBar", () => {
   it("renders scroll bar with vertical orientation by default", () => {
     const { asFragment } = render(
       <ScrollArea>
-        <ScrollBar />
+        <ScrollBar orientation="vertical" />
+      </ScrollArea>,
+    );
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it("renders scroll bar with vertical orientation", () => {
+    const { asFragment } = render(
+      <ScrollArea>
+        <ScrollBar orientation="vertical" />
+      </ScrollArea>,
+    );
+
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it("renders scroll bar with horizontal orientation", () => {
+    const { asFragment } = render(
+      <ScrollArea>
+        <ScrollBar orientation="horizontal" />
       </ScrollArea>,
     );
 

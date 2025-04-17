@@ -4,7 +4,7 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
 <DocumentFragment>
   <div>
     <div
-      class="ia:fixed ia:top-9 ia:right-1 ia:z-50 ia:w-[350px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none! ia:border-gray-200 ia:dark:border-gray-800"
+      class="ia:fixed ia:top-9 ia:right-1 ia:z-50 ia:w-[372px] ia:lg:w-[420px] ia:xl:w-[460px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none! ia:border-gray-200 ia:dark:border-gray-800"
       data-testid="popover-content"
       id="test-popover"
     >
@@ -42,7 +42,7 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
           class="ia:relative ia:h-[400px]"
         >
           <div
-            class="ia:relative ia:overflow-hidden ia:h-full ia:pr-3"
+            class="ia:relative ia:overflow-hidden ia:h-full"
             dir="ltr"
             style="position: relative; --radix-scroll-area-corner-width: 0px; --radix-scroll-area-corner-height: 0px;"
           >
@@ -114,7 +114,7 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
                       <div
                         class="ia:inline-flex ia:items-center ia:rounded-full ia:border ia:px-2.5 ia:py-0.5 ia:text-xs ia:font-semibold ia:transition-colors ia:focus:outline-none ia:focus:ring-2 ia:focus:ring-ring ia:focus:ring-offset-2 ia:ml-auto ia:border-gray-200 ia:dark:border-gray-700 ia:text-gray-700 ia:dark:text-gray-300"
                       >
-                        1
+                        2
                       </div>
                     </button>
                     <div
@@ -155,11 +155,15 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
                           >
                             Token:
                           </span>
-                          <span
-                            class="ia:font-mono ia:text-emerald-600 ia:dark:text-emerald-500"
+                          <div
+                            class="ia:flex ia:flex-col ia:gap-1"
                           >
-                            COLOR_PRIMARY
-                          </span>
+                            <span
+                              class="ia:font-mono ia:text-emerald-600 ia:dark:text-emerald-500"
+                            >
+                              COLOR_PRIMARY
+                            </span>
+                          </div>
                           <span
                             class="ia:text-gray-500 ia:dark:text-gray-400"
                           >
@@ -168,10 +172,80 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
                           <div
                             class="ia:flex ia:items-center ia:gap-1.5"
                           >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgb(255, 0, 0); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
                             <span
-                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
                             >
                               rgb(255, 0, 0)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="ia:rounded-md ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:p-2 ia:text-sm ia:bg-white ia:dark:bg-gray-900"
+                      >
+                        <div
+                          class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                        >
+                          background
+                        </div>
+                        <div
+                          class="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs"
+                        >
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Value:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgb(0, 0, 255); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
+                            <span
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              #0000ff
+                            </span>
+                          </div>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Token:
+                          </span>
+                          <div
+                            class="ia:flex ia:flex-col ia:gap-1"
+                          >
+                            <span
+                              class="ia:font-mono ia:text-emerald-600 ia:dark:text-emerald-500"
+                            >
+                              BG_PRIMARY
+                            </span>
+                          </div>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Computed:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgb(0, 0, 255); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
+                            <span
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              rgb(0, 0, 255)
                             </span>
                           </div>
                         </div>
@@ -282,11 +356,15 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
                           >
                             Variable:
                           </span>
-                          <span
-                            class="ia:font-mono ia:text-violet-600 ia:dark:text-violet-500"
+                          <div
+                            class="ia:flex ia:flex-col ia:gap-1"
                           >
-                            --bg-color
-                          </span>
+                            <span
+                              class="ia:font-mono ia:text-violet-600 ia:dark:text-violet-500"
+                            >
+                              --bg-color
+                            </span>
+                          </div>
                           <span
                             class="ia:text-gray-500 ia:dark:text-gray-400"
                           >
@@ -295,8 +373,13 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
                           <div
                             class="ia:flex ia:items-center ia:gap-1.5"
                           >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgb(0, 0, 0); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
                             <span
-                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
                             >
                               rgb(0, 0, 0)
                             </span>
@@ -309,8 +392,13 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
                           <div
                             class="ia:flex ia:items-center ia:gap-1.5"
                           >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgb(0, 0, 0); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
                             <span
-                              class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
                             >
                               rgb(0, 0, 0)
                             </span>
@@ -375,7 +463,7 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
                       <div
                         class="ia:inline-flex ia:items-center ia:rounded-full ia:border ia:px-2.5 ia:py-0.5 ia:text-xs ia:font-semibold ia:transition-colors ia:focus:outline-none ia:focus:ring-2 ia:focus:ring-ring ia:focus:ring-offset-2 ia:ml-auto ia:border-gray-200 ia:dark:border-gray-700 ia:text-gray-700 ia:dark:text-gray-300"
                       >
-                        1
+                        4
                       </div>
                     </button>
                     <div
@@ -418,6 +506,120 @@ exports[`CSSPropertiesPopover > renders with all property groups 1`] = `
                               class="ia:font-mono  ia:text-gray-900 ia:dark:text-gray-100"
                             >
                               16px
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="ia:rounded-md ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:p-2 ia:text-sm ia:bg-white ia:dark:bg-gray-900"
+                      >
+                        <div
+                          class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                        >
+                          unknown-property
+                        </div>
+                        <div
+                          class="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs"
+                        />
+                      </div>
+                      <div
+                        class="ia:rounded-md ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:p-2 ia:text-sm ia:bg-white ia:dark:bg-gray-900"
+                      >
+                        <div
+                          class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                        >
+                          color
+                        </div>
+                        <div
+                          class="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs"
+                        >
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Value:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgb(0, 0, 0); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
+                            <span
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              hsla(0, 0%, 0%, 1)
+                            </span>
+                          </div>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Computed:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgb(0, 0, 0); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
+                            <span
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              rgb(0, 0, 0)
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="ia:rounded-md ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:p-2 ia:text-sm ia:bg-white ia:dark:bg-gray-900"
+                      >
+                        <div
+                          class="ia:font-medium ia:text-gray-900 ia:dark:text-white"
+                        >
+                          background
+                        </div>
+                        <div
+                          class="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs"
+                        >
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Value:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgba(0, 255, 255, 0.4); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
+                            <span
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              #00ffff66
+                            </span>
+                          </div>
+                          <span
+                            class="ia:text-gray-500 ia:dark:text-gray-400"
+                          >
+                            Computed:
+                          </span>
+                          <div
+                            class="ia:flex ia:items-center ia:gap-1.5"
+                          >
+                            <div
+                              class="ia:size-3.5 ia:rounded-sm ia:border ia:border-gray-300 ia:dark:border-gray-700 ia:flex-shrink-0"
+                              data-testid="color-swatch"
+                              style="background-color: rgb(0, 255, 255); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);"
+                            />
+                            <span
+                              class="ia:font-mono ia:flex-1 ia:text-gray-900 ia:dark:text-gray-100"
+                            >
+                              rgba(0, 255, 255)
                             </span>
                           </div>
                         </div>

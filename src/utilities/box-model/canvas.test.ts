@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { init, clear, draw, rescale, destroy } from "./canvas";
+import { init, clear, draw, rescale, destroy, destroyAll } from "./canvas";
 import { global } from "@storybook/global";
 
 describe("canvas utility", () => {
@@ -87,7 +87,7 @@ describe("canvas utility", () => {
     it("clears the canvas", () => {
       init();
       clear("selected");
-      expect(mockContext.clearRect).toHaveBeenCalled();
+      expect(mockContext.clearRect).toHaveBeenCalledWith(0, 0, 800, 1000);
     });
 
     it("does nothing if canvas is not initialized", () => {
@@ -96,6 +96,21 @@ describe("canvas utility", () => {
       mockContext.clearRect.mockClear();
       clear("selected");
       expect(mockContext.clearRect).not.toHaveBeenCalled();
+    });
+
+    it("should be called with the right parameters", () => {
+      global.document = {
+        ...mockDocument,
+        documentElement: {
+          ...mockDocument.documentElement,
+          scrollHeight: undefined,
+          scrollWidth: undefined,
+          offsetHeight: 12,
+        },
+      } as unknown as Document;
+      init();
+      destroy("hover");
+      expect(mockContext.clearRect).toHaveBeenCalledWith(0, 0, 0, 0);
     });
   });
 
@@ -122,7 +137,7 @@ describe("canvas utility", () => {
     it("rescales canvas to match document dimensions and then resets to 0", () => {
       init();
       rescale();
-      
+
       // The actual implementation first sets dimensions based on document size
       // Then resets them to 0 to prevent the canvas from impacting container size
       expect(mockCanvas.style.width).toBe("0px");
@@ -135,7 +150,7 @@ describe("canvas utility", () => {
     it("handles device pixel ratio when resetting dimensions", () => {
       init();
       rescale();
-      
+
       // After resetting, dimensions should be 0
       expect(mockCanvas.width).toBe(0);
       expect(mockCanvas.height).toBe(0);
@@ -157,6 +172,17 @@ describe("canvas utility", () => {
       mockCanvas.parentNode.removeChild.mockClear();
       destroy("selected");
       expect(mockCanvas.parentNode.removeChild).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("destroyAll", () => {
+    it("destroys both selected and hover canvases", () => {
+      init();
+      destroyAll();
+      expect(mockCanvas.parentNode.removeChild).toHaveBeenCalledTimes(2);
+      expect(mockCanvas.parentNode.removeChild).toHaveBeenCalledWith(
+        mockCanvas,
+      );
     });
   });
 });
