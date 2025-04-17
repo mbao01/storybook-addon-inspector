@@ -81,8 +81,8 @@ export function clear(type: CanvasType) {
     state[type].context.clearRect(
       0,
       0,
-      state[type].width ?? 0,
-      state[type].height ?? 0,
+      state[type].width || 0,
+      state[type].height || 0,
     );
   }
 }
