@@ -17,13 +17,12 @@ import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { cn } from "../lib/utils";
 
-type CSSPropertyValue = Record<
-  "value" | "token" | "computed" | "variable" | "variableValue",
-  string | undefined
+type CSSPropertyValue = Partial<
+  Record<"value" | "computed" | "variableValue", string> &
+    Record<"token" | "variable", string[]>
 > & {
   property: string;
 };
-
 
 type CSSPropertyPopoverProps = {
   id: string;
@@ -65,10 +64,10 @@ export const CSSPropertiesPopover = ({
       <PopoverContent
         id={id}
         className={cn(
-          "ia:fixed ia:top-9 ia:right-1 ia:z-50 ia:w-[350px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none!",
+          "ia:fixed ia:top-9 ia:right-1 ia:z-50 ia:w-[372px] ia:lg:w-[420px] ia:xl:w-[460px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none!",
           {
             "ia:border-gray-200 ia:dark:border-gray-800": isExpanded,
-            "ia:w-[180px]": !isExpanded,
+            "ia:w-[180px!": !isExpanded,
           },
         )}
       >
@@ -91,7 +90,7 @@ export const CSSPropertiesPopover = ({
 
           {isExpanded && (
             <div className="ia:relative ia:h-[400px]">
-              <ScrollArea className="ia:h-full ia:pr-3">
+              <ScrollArea className="ia:h-full">
                 <div className="ia:space-y-1">
                   {groups.map(({ title, icon, properties }, index) => {
                     return (
@@ -174,50 +173,64 @@ const PropertyItem = ({ property }: { property: CSSPropertyValue }) => {
         {property.property}
       </div>
       <div className="ia:grid ia:grid-cols-2 ia:gap-x-2 ia:gap-y-1 ia:mt-1 ia:text-xs">
-        {property.value && (
+        {property.value ? (
           <>
             <span className="ia:text-gray-500 ia:dark:text-gray-400">
               Value:
             </span>
             <ColorValue value={property.value} />
           </>
-        )}
-        {property.token && (
+        ) : null}
+        {property.token?.length ? (
           <>
             <span className="ia:text-gray-500 ia:dark:text-gray-400">
               Token:
             </span>
-            <span className="ia:font-mono ia:text-emerald-600 ia:dark:text-emerald-500">
-              {property.token}
-            </span>
+            <div className="ia:flex ia:flex-col ia:gap-1">
+              {property.token.map((v, i) => (
+                <span
+                  key={i}
+                  className="ia:font-mono ia:text-emerald-600 ia:dark:text-emerald-500"
+                >
+                  {v}
+                </span>
+              ))}
+            </div>
           </>
-        )}
-        {property.variable && (
+        ) : null}
+        {property.variable?.length ? (
           <>
             <span className="ia:text-gray-500 ia:dark:text-gray-400">
               Variable:
             </span>
-            <span className="ia:font-mono ia:text-violet-600 ia:dark:text-violet-500">
-              {property.variable}
-            </span>
+            <div className="ia:flex ia:flex-col ia:gap-1">
+              {property.variable.map((v, i) => (
+                <span
+                  key={i}
+                  className="ia:font-mono ia:text-violet-600 ia:dark:text-violet-500"
+                >
+                  {v}
+                </span>
+              ))}
+            </div>
           </>
-        )}
-        {property.variableValue && (
+        ) : null}
+        {property.variableValue ? (
           <>
             <span className="ia:text-gray-500 ia:dark:text-gray-400">
               Variable Value:
             </span>
             <ColorValue value={property.variableValue} />
           </>
-        )}
-        {property.computed && (
+        ) : null}
+        {property.computed ? (
           <>
             <span className="ia:text-gray-500 ia:dark:text-gray-400">
               Computed:
             </span>
             <ColorValue value={property.computed} />
           </>
-        )}
+        ) : null}
       </div>
     </div>
   );

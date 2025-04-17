@@ -17,7 +17,7 @@
  */
 import SHORTHAND_PROPERTIES_MAP from "./data/css-shorthands.json";
 
-import type { CSSPropertiesObj, Obj } from "./types";
+import type { CSSPropertiesObj, Obj, ObjList } from "./types";
 
 const SHORTHAND_PROPERTIES = Object.keys(SHORTHAND_PROPERTIES_MAP);
 
@@ -31,30 +31,7 @@ const getOutputAndShorthandOutput = (node: HTMLElement) => {
     const stylesheet = stylesheets[sIndex];
     const rules = stylesheet.cssRules || stylesheet.rules;
 
-    // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    for (let rIndex = 0; rIndex < rules.length; rIndex++) {
-      const { selectorText, style } = rules[rIndex] as CSSStyleRule;
-      if (node?.matches(selectorText)) {
-        // Get all property names from the style object
-        const properties = Array.from(style).filter((prop) =>
-          style.getPropertyValue(prop),
-        );
-
-        for (const property of SHORTHAND_PROPERTIES) {
-          const value = style.getPropertyValue(property);
-          if (value) {
-            shorthandOutput[property] = value;
-          }
-        }
-
-        for (const property of properties) {
-          const value = style.getPropertyValue(property);
-          if (value) {
-            output[property] = value;
-          }
-        }
-      }
-    }
+    processCSSRules(node, rules, output, shorthandOutput);
   }
 
   return { output, shorthandOutput };
@@ -65,22 +42,23 @@ type MarryShorthandOutputParams = {
   shorthandOutput: Obj;
 };
 
-const marryShorthandOutput = ({
+const mergeShorthandOutput = ({
   output,
   shorthandOutput,
 }: MarryShorthandOutputParams) => {
-  const result = { ...output };
+  const entries = { ...output };
+  const shorthandEntries = { ...shorthandOutput };
   Object.entries(shorthandOutput).forEach(([shorthand, shorthandValue]) => {
     if (shorthandValue) {
       const properties = SHORTHAND_PROPERTIES_MAP[shorthand];
       properties.forEach((property) => {
-        delete result[property];
+        delete entries[property];
+        delete shorthandEntries[property];
       });
-      result[shorthand] = shorthandValue;
     }
   });
 
-  return { output: result };
+  return { output: { ...entries, ...shorthandEntries } };
 };
 
 type CSSVariableStylesParams = {
@@ -89,7 +67,7 @@ type CSSVariableStylesParams = {
 
 const getCSSVariableStyles = ({ output }: CSSVariableStylesParams) => {
   const styles = Object.entries(output).reduce((acc, [property, value]) => {
-    if (value.startsWith("var(")) {
+    if (value.includes("var(")) {
       acc[property] = value;
     }
     return acc;
@@ -104,14 +82,15 @@ type AppliedCSSVariablesParams = {
 
 const getAppliedCSSVariables = ({ styles }: AppliedCSSVariablesParams) => {
   const variables = Object.entries(styles).reduce((acc, [property, value]) => {
-    const regex = /var\((.*)\)/;
-    const match = value.match(regex);
+    const matches = value.toString().matchAll(/var\(([0-9a-zA-Z_\-]*)\)/gi);
+    const values = [...matches].map(([, v]) => v);
 
-    if (match?.[1]) {
-      acc[property] = match[1];
+    if (values.length > 0) {
+      acc[property] = values;
     }
+
     return acc;
-  }, {} as Obj);
+  }, {} as ObjList);
 
   return { variables };
 };
@@ -122,30 +101,39 @@ type AppliedTokensParams = {
 
 const getAppliedTokens = ({ styles }: AppliedTokensParams) => {
   const tokens = Object.entries(styles).reduce((acc, [property, value]) => {
-    const regex = /var\(--nk-(.*)\)/;
-    const match = value.match(regex);
+    const matches = value
+      .toString()
+      .matchAll(/var\(--nk-([0-9a-zA-Z_\-]*)\)/gi);
+    const values = [...matches].map(([, v]) =>
+      v.replaceAll("-", "_").toUpperCase(),
+    );
 
-    if (match?.[1]) {
-      acc[property] = match[1].replaceAll("-", "_").toUpperCase();
+    if (values.length > 0) {
+      acc[property] = values;
     }
+
     return acc;
-  }, {} as Obj);
+  }, {} as ObjList);
 
   return { tokens };
 };
 
 export const getCSSProperties = (node: HTMLElement) => {
-  const { output } = marryShorthandOutput(getOutputAndShorthandOutput(node));
+  const { output } = mergeShorthandOutput(getOutputAndShorthandOutput(node));
   const { styles } = getCSSVariableStyles({ output });
   const { variables } = getAppliedCSSVariables({ styles });
   const { tokens } = getAppliedTokens({ styles });
 
-  const computed = getComputedStyle(node);
+  console.log("APplied tokens: ", tokens);
 
+  const computed = getComputedStyle(node);
   const result = Object.entries(output).reduce((acc, [property, value]) => {
     const token = tokens[property];
     const variable = variables[property];
-    const variableValue = computed.getPropertyValue(variable);
+    const variableValue =
+      variable?.length === 1
+        ? computed.getPropertyValue(variable[0])
+        : undefined;
     acc[property] = {
       value,
       token,
@@ -161,4 +149,75 @@ export const getCSSProperties = (node: HTMLElement) => {
     tokens,
     variables,
   };
+};
+
+const isSelectorValid = (selector: string) => {
+  return selector && !selector.startsWith("--") && !selector.startsWith("*");
+};
+
+const isPropertyValid = (property: string) => {
+  return !property.startsWith("--") && property !== "*";
+};
+
+const isValueValid = (value: string) => {
+  return (
+    value &&
+    !["initial", "all", "inherit"].includes(value.toString().toLowerCase())
+  );
+};
+
+const processCSSRules = (
+  node: HTMLElement,
+  ruleList: CSSRuleList,
+  output = {},
+  shorthandOutput = {},
+) => {
+  // eslint-disable-next-line @typescript-eslint/prefer-for-of
+  for (let rIndex = 0; rIndex < ruleList.length; rIndex++) {
+    const styleRule = ruleList[rIndex] as CSSStyleRule;
+    if (styleRule instanceof CSSStyleRule) {
+      const { selectorText, style } = styleRule;
+      const isValidSelector = isSelectorValid(selectorText);
+      if (isValidSelector && node?.matches(selectorText)) {
+        // Get all property names from the style object
+        const properties = Array.from(style).filter((prop) =>
+          style.getPropertyValue(prop),
+        );
+
+        for (const property of SHORTHAND_PROPERTIES) {
+          const value = style.getPropertyValue(property);
+          const isValidValue = isValueValid(value);
+
+          if (isValidValue) {
+            shorthandOutput[property] = value;
+            // } else {
+            // delete shorthandOutput[property];
+          }
+        }
+
+        for (const property of properties) {
+          // const isValidProperty = isPropertyValid(property);
+          // if (isValidProperty) {
+          const value = style.getPropertyValue(property);
+          const isValidValue = isValueValid(value);
+          if (isValidValue) {
+            output[property] = value;
+            // } else {
+            // delete shorthandOutput[property];
+          }
+          // }
+        }
+      }
+    }
+
+    if (styleRule instanceof CSSLayerBlockRule) {
+      const childRuleList =
+        styleRule.cssRules || (styleRule as unknown as CSSStyleSheet).rules;
+      if (childRuleList) {
+        processCSSRules(node, childRuleList, output, shorthandOutput);
+      }
+    }
+  }
+
+  return { output, shorthandOutput };
 };

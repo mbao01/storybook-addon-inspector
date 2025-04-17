@@ -21,11 +21,31 @@
     "background-color"
   ],
 
-  "border": ["border-width", "border-style", "border-color"],
+  "border": [
+    "border-top",
+    "border-right",
+    "border-bottom",
+    "border-left",
+    "border-width",
+    "border-style",
+    "border-color"
+  ],
   "border-top": ["border-top-width", "border-top-style", "border-top-color"],
-  "border-right": ["border-right-width", "border-right-style", "border-right-color"],
-  "border-bottom": ["border-bottom-width", "border-bottom-style", "border-bottom-color"],
-  "border-left": ["border-left-width", "border-left-style", "border-left-color"],
+  "border-right": [
+    "border-right-width",
+    "border-right-style",
+    "border-right-color"
+  ],
+  "border-bottom": [
+    "border-bottom-width",
+    "border-bottom-style",
+    "border-bottom-color"
+  ],
+  "border-left": [
+    "border-left-width",
+    "border-left-style",
+    "border-left-color"
+  ],
   "border-width": [
     "border-top-width",
     "border-right-width",
@@ -58,7 +78,11 @@
     "border-image-repeat"
   ],
 
-  "border-block": ["border-block-width", "border-block-style", "border-block-color"],
+  "border-block": [
+    "border-block-width",
+    "border-block-style",
+    "border-block-color"
+  ],
   "border-block-start": [
     "border-block-start-width",
     "border-block-start-style",
@@ -69,7 +93,11 @@
     "border-block-end-style",
     "border-block-end-color"
   ],
-  "border-inline": ["border-inline-width", "border-inline-style", "border-inline-color"],
+  "border-inline": [
+    "border-inline-width",
+    "border-inline-style",
+    "border-inline-color"
+  ],
   "border-inline-start": [
     "border-inline-start-width",
     "border-inline-start-style",
@@ -83,12 +111,25 @@
   "border-block-width": ["border-block-start-width", "border-block-end-width"],
   "border-block-style": ["border-block-start-style", "border-block-end-style"],
   "border-block-color": ["border-block-start-color", "border-block-end-color"],
-  "border-inline-width": ["border-inline-start-width", "border-inline-end-width"],
-  "border-inline-style": ["border-inline-start-style", "border-inline-end-style"],
-  "border-inline-color": ["border-inline-start-color", "border-inline-end-color"],
+  "border-inline-width": [
+    "border-inline-start-width",
+    "border-inline-end-width"
+  ],
+  "border-inline-style": [
+    "border-inline-start-style",
+    "border-inline-end-style"
+  ],
+  "border-inline-color": [
+    "border-inline-start-color",
+    "border-inline-end-color"
+  ],
 
   "columns": ["column-width", "column-count"],
-  "column-rule": ["column-rule-width", "column-rule-style", "column-rule-color"],
+  "column-rule": [
+    "column-rule-width",
+    "column-rule-style",
+    "column-rule-color"
+  ],
 
   "flex": ["flex-grow", "flex-shrink", "flex-basis"],
   "flex-flow": ["flex-direction", "flex-wrap"],
@@ -120,10 +161,19 @@
     "grid-auto-columns",
     "grid-auto-flow"
   ],
-  "grid-area": ["grid-row-start", "grid-column-start", "grid-row-end", "grid-column-end"],
+  "grid-area": [
+    "grid-row-start",
+    "grid-column-start",
+    "grid-row-end",
+    "grid-column-end"
+  ],
   "grid-column": ["grid-column-start", "grid-column-end"],
   "grid-row": ["grid-row-start", "grid-row-end"],
-  "grid-template": ["grid-template-rows", "grid-template-columns", "grid-template-areas"],
+  "grid-template": [
+    "grid-template-rows",
+    "grid-template-columns",
+    "grid-template-areas"
+  ],
   "grid-gap": ["grid-row-gap", "grid-column-gap"],
   "gap": ["row-gap", "column-gap"],
 
@@ -153,7 +203,13 @@
     "mask-border-mode"
   ],
 
-  "offset": ["offset-position", "offset-path", "offset-distance", "offset-rotate", "offset-anchor"],
+  "offset": [
+    "offset-position",
+    "offset-path",
+    "offset-distance",
+    "offset-rotate",
+    "offset-anchor"
+  ],
 
   "outline": ["outline-color", "outline-style", "outline-width"],
 
@@ -180,8 +236,14 @@
     "scroll-margin-left"
   ],
 
-  "scroll-margin-block": ["scroll-margin-block-start", "scroll-margin-block-end"],
-  "scroll-margin-inline": ["scroll-margin-inline-start", "scroll-margin-inline-end"],
+  "scroll-margin-block": [
+    "scroll-margin-block-start",
+    "scroll-margin-block-end"
+  ],
+  "scroll-margin-inline": [
+    "scroll-margin-inline-start",
+    "scroll-margin-inline-end"
+  ],
 
   "scroll-padding": [
     "scroll-padding-top",
@@ -190,8 +252,14 @@
     "scroll-padding-left"
   ],
 
-  "scroll-padding-block": ["scroll-padding-block-start", "scroll-padding-block-end"],
-  "scroll-padding-inline": ["scroll-padding-inline-start", "scroll-padding-inline-end"],
+  "scroll-padding-block": [
+    "scroll-padding-block-start",
+    "scroll-padding-block-end"
+  ],
+  "scroll-padding-inline": [
+    "scroll-padding-inline-start",
+    "scroll-padding-inline-end"
+  ],
 
   "scrollbar-color": ["scrollbar-thumb-color", "scrollbar-track-color"],
 
