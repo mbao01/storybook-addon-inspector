@@ -66,6 +66,11 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     });
   }, []);
 
+  const onDisableClick = useCallback((event: any) => {
+    event.stopPropagation();
+    event.preventDefault();
+  }, []);
+
   const onResize = useCallback(() => {
     window.requestAnimationFrame(() => {
       rescale();
@@ -76,11 +81,18 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     document.addEventListener("mousedown", onMouseDown);
     init();
     window.addEventListener("resize", onResize);
+    document
+      .getElementById("storybook-root")
+      ?.addEventListener("click", onDisableClick, true);
+    console.log("CCC: ");
   };
 
   const handleDestroy = () => {
     window.removeEventListener("resize", onResize);
     document.removeEventListener("mousedown", onMouseDown);
+    document
+      .getElementById("storybook-root")
+      ?.removeEventListener("click", onDisableClick, true);
     destroyAll();
     setNodeProperties({ node: null, properties: null });
     setOpen(false);
