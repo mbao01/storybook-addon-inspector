@@ -11,7 +11,7 @@ import type { CSSPropertiesObj, Point } from "./utilities/types";
 import { destroyAll, init, rescale } from "./utilities/box-model/canvas";
 import { PARAM_KEY } from "./constants";
 import { getPointNodeAndCSSProperties, groupCSSProperties } from "./utilities";
-import { CSSPropertiesPopover } from "./components";
+import { CSSPropertiesPopoverShadowRoot } from "./components";
 import { drawHoverElementOnPoint } from "./utilities/getPointNodeAndCSSProperties";
 
 const pointer: Point = { x: 0, y: 0 };
@@ -130,7 +130,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     <>
       <StoryFn />
       {isEnabled && (
-        <CSSPropertiesPopover
+        <CSSPropertiesPopoverShadowRoot
           id={CSS_PROPERTIES_POPOVER_ID}
           open={open}
           tokens={tokens ?? []}

@@ -1,0 +1,10 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`CSSPropertiesPopoverShadowRoot > renders shadow root 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="test-popover-shadow-root"
+    id="test-popover-shadow-root"
+  />
+</DocumentFragment>
+`;
