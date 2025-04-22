@@ -3,6 +3,7 @@ import { drawBoxModel } from "./drawBoxModel";
 import { drawMargin } from "./drawMargin";
 import { drawPadding } from "./drawPadding";
 import { drawBorder } from "./drawBorder";
+import { drawContent } from "./drawContent";
 import { measureElement } from "./measureElement";
 import type { ElementMeasurements } from "./types";
 
@@ -17,6 +18,10 @@ vi.mock("./drawPadding", () => ({
 
 vi.mock("./drawBorder", () => ({
   drawBorder: vi.fn(),
+}));
+
+vi.mock("./drawContent", () => ({
+  drawContent: vi.fn(),
 }));
 
 vi.mock("./measureElement", () => ({
@@ -61,6 +66,7 @@ describe("drawBoxModel", () => {
     expect(drawMargin).toHaveBeenCalledWith(mockContext, mockMeasurements);
     expect(drawPadding).toHaveBeenCalledWith(mockContext, mockMeasurements);
     expect(drawBorder).toHaveBeenCalledWith(mockContext, mockMeasurements);
+    expect(drawContent).toHaveBeenCalledWith(mockContext, mockMeasurements);
   });
 
   it("should not draw anything when called without context", () => {
@@ -71,10 +77,10 @@ describe("drawBoxModel", () => {
     expect(drawMargin).not.toHaveBeenCalled();
     expect(drawPadding).not.toHaveBeenCalled();
     expect(drawBorder).not.toHaveBeenCalled();
+    expect(drawContent).not.toHaveBeenCalled();
   });
 
   it("should not draw anything when element is null", () => {
-    // @ts-expect-error - Testing with null element
     const drawFn = drawBoxModel(null);
     drawFn(mockContext);
 
@@ -82,5 +88,19 @@ describe("drawBoxModel", () => {
     expect(drawMargin).not.toHaveBeenCalled();
     expect(drawPadding).not.toHaveBeenCalled();
     expect(drawBorder).not.toHaveBeenCalled();
+    expect(drawContent).not.toHaveBeenCalled();
+  });
+
+  it("should call draw functions in the correct order", () => {
+    const drawFn = drawBoxModel(mockElement);
+    drawFn(mockContext);
+
+    expect(measureElement).toHaveBeenCalledWith(mockElement);
+    
+    // Verify the order of calls
+    const calls = vi.mocked(drawMargin).mock.invocationCallOrder;
+    expect(calls[0]).toBeLessThan(vi.mocked(drawPadding).mock.invocationCallOrder[0]);
+    expect(vi.mocked(drawPadding).mock.invocationCallOrder[0]).toBeLessThan(vi.mocked(drawBorder).mock.invocationCallOrder[0]);
+    expect(vi.mocked(drawBorder).mock.invocationCallOrder[0]).toBeLessThan(vi.mocked(drawContent).mock.invocationCallOrder[0]);
   });
 }); 
