@@ -36,7 +36,7 @@ function createCanvas(type): CanvasState {
   canvas.style.position = "absolute";
   canvas.style.left = "0";
   canvas.style.top = "0";
-  canvas.style.zIndex = "2147483647";
+  canvas.style.zIndex = "999999999";
   // Disable any user interactions
   canvas.style.pointerEvents = "none";
   global.document.body.appendChild(canvas);

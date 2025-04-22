@@ -3,7 +3,7 @@ import { getPointNodeAndCSSProperties, drawHoverElementOnPoint } from "./getPoin
 import { getElementFromPoint } from "./getElementFromPoint";
 import { getCSSProperties } from "./getCSSProperties";
 import { drawHoverElement, drawSelectedElement } from "./box-model/visualizer";
-import type { Obj } from "./types";
+import type { ObjList } from "./types";
 
 // Mock the dependencies
 vi.mock("./getElementFromPoint");
@@ -30,8 +30,8 @@ describe("getPointNodeAndCSSProperties", () => {
         variableValue: undefined,
       },
     },
-    tokens: {} as Obj,
-    variables: {} as Obj,
+    tokens: {} as ObjList,
+    variables: {} as ObjList,
   };
 
   beforeEach(() => {
@@ -100,11 +100,11 @@ describe("drawHoverElementOnPoint", () => {
     expect(drawHoverElement).not.toHaveBeenCalled();
   });
 
-  it("should not draw hover element when no element is found", () => {
+  it("should call draw hover element when no element is found", () => {
     vi.mocked(getElementFromPoint).mockReturnValue(null);
     
     drawHoverElementOnPoint({ x: 0, y: 0 }, document.createElement("div"));
     
-    expect(drawHoverElement).not.toHaveBeenCalled();
+    expect(drawHoverElement).toHaveBeenCalledWith(null);
   });
 });

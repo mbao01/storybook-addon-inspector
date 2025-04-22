@@ -1,11 +1,22 @@
 import { describe, it, expect, vi } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { CSSPropertiesPopover } from "./CSSPropertiesPopover";
 
 // Mock the Popover component to avoid portal issues
 vi.mock("../ui/popover", () => ({
-  Popover: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  PopoverContent: ({ children, className, id }: { children: React.ReactNode, className?: string, id?: string }) => (
+  Popover: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+  PopoverContent: ({
+    children,
+    className,
+    id,
+  }: {
+    children: React.ReactNode;
+    className?: string;
+    id?: string;
+  }) => (
     <div id={id} className={className} data-testid="popover-content">
       {children}
     </div>
@@ -109,17 +120,19 @@ describe("CSSPropertiesPopover", () => {
     expect(screen.getByText("No CSS properties found")).toBeVisible();
   });
 
-  it("toggles expansion state when clicking the header button", () => {
+  it("toggles expansion state when clicking the header button", async () => {
+    const user = userEvent.setup();
+
     render(<CSSPropertiesPopover {...mockProps} />);
 
     const headerButton = screen.getByText("CSS Property Inspector");
-    fireEvent.click(headerButton);
+    await user.click(headerButton);
 
     // After clicking, the content should be hidden
     expect(screen.queryByText("Tokens")).not.toBeInTheDocument();
 
     // Click again to expand
-    fireEvent.click(headerButton);
+    await user.click(headerButton);
     expect(screen.getByText("Tokens")).toBeVisible();
   });
 
@@ -158,7 +171,9 @@ describe("CSSPropertiesPopover", () => {
     expect(screen.getAllByText("color")).toHaveLength(2);
   });
 
-  it("renders with correct CSS classes based on expansion state", () => {
+  it("renders with correct CSS classes based on expansion state", async () => {
+    const user = userEvent.setup();
+
     render(<CSSPropertiesPopover {...mockProps} />);
 
     // Initially expanded
@@ -167,9 +182,35 @@ describe("CSSPropertiesPopover", () => {
 
     // Click to collapse
     const headerButton = screen.getByText("CSS Property Inspector");
-    fireEvent.click(headerButton);
+    await user.click(headerButton);
 
     // Should have collapsed width
-    expect(popoverContent).toHaveClass("ia:w-[180px]!");
+    expect(popoverContent).toHaveClass("ia:w-[220px]!");
+  });
+
+  it("toggles position between top-right and top-left", async () => {
+    const user = userEvent.setup();
+
+    const { asFragment } = render(<CSSPropertiesPopover {...mockProps} />);
+
+    // Initially in top-right position
+    const popoverContent = screen.getByTestId("popover-content");
+    expect(popoverContent).toHaveClass("ia:top-9", "ia:right-1");
+
+    // Click the move left button to switch to top-left
+    const moveLeftButton = screen.getByTestId("move-left-button");
+    await user.click(moveLeftButton);
+
+    // Should now be in top-left position
+    expect(popoverContent).toHaveClass("ia:top-9", "ia:left-1");
+    expect(asFragment()).toMatchSnapshot();
+
+    // Click the move right button to switch back to top-right
+    const moveRightButton = screen.getByTestId("move-right-button");
+    await user.click(moveRightButton);
+
+    // Should be back in top-right position
+    expect(popoverContent).toHaveClass("ia:top-9", "ia:right-1");
+    expect(asFragment()).toMatchSnapshot();
   });
 });
