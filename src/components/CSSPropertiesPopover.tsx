@@ -7,6 +7,8 @@ import {
   ChevronDown,
   ChevronRight,
   Code,
+  MoveLeftIcon,
+  MoveRightIcon,
   Paintbrush,
   Variable,
 } from "lucide-react";
@@ -16,6 +18,13 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { cn } from "../lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 type CSSPropertyValue = Partial<
   Record<"value" | "computed" | "variableValue", string> &
@@ -32,6 +41,8 @@ type CSSPropertyPopoverProps = {
   open: boolean;
 };
 
+type PopoverPosition = "top-right" | "top-left";
+
 export const CSSPropertiesPopover = ({
   id,
   tokens,
@@ -40,6 +51,7 @@ export const CSSPropertiesPopover = ({
   open,
 }: CSSPropertyPopoverProps) => {
   const [isExpanded, setExpanded] = useState(true);
+  const [position, setPosition] = useState<PopoverPosition>("top-right");
 
   const groups = [
     {
@@ -64,30 +76,50 @@ export const CSSPropertiesPopover = ({
       <PopoverContent
         id={id}
         className={cn(
-          "ia:fixed ia:top-9 ia:right-1 ia:z-[9999999999] ia:w-[372px] ia:lg:w-[420px] ia:xl:w-[460px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none!",
+          "ia:fixed ia:z-[9999999999] ia:w-[372px] ia:lg:w-[420px] ia:xl:w-[460px] ia:p-0 ia:bg-white ia:dark:bg-gray-900 ia:rounded-tl-none!",
           {
             "ia:border-gray-200 ia:dark:border-gray-800": isExpanded,
-            "ia:w-[180px]!": !isExpanded,
+            "ia:w-[220px]!": !isExpanded,
+          },
+          {
+            "ia:top-9 ia:right-1": position === "top-right",
+            "ia:top-9 ia:left-1": position === "top-left",
           },
         )}
       >
         <div className="ia:relative">
-          <div className="ia:absolute ia:-top-7.5 ia:left-0 ia:right-4 ia:flex ia:items-center ia:w-[180px]">
+          <div className="ia:absolute ia:-top-7.5 ia:left-0 ia:right-4 ia:flex ia:items-center ia:w-[220px]">
             <button
               tabIndex={-1}
               type="button"
               onClick={() => setExpanded((e) => !e)}
-              className="ia:flex ia:gap-2 ia:items-center ia:justify-between ia:w-full ia:bg-white ia:dark:bg-gray-900 ia:text-gray-900/60 ia:dark:text-white/60 ia:px-3 ia:py-1.5 ia:-ml-px ia:text-xs ia:font-medium ia:rounded-t-lg ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:border-b-0 ia:cursor-pointer"
+              className="ia:flex ia:gap-1 ia:items-center ia:justify-between ia:w-full ia:bg-white ia:dark:bg-gray-900 ia:text-gray-900/60 ia:dark:text-white/60 ia:px-3 ia:py-1.5 ia:-ml-px ia:text-xs ia:font-medium ia:rounded-t-lg ia:border ia:border-gray-200 ia:dark:border-gray-800 ia:border-b-0 ia:cursor-pointer"
             >
               CSS Property Inspector{" "}
+              <Badge
+                variant="outline"
+                className="ia:border-gray-200 ia:dark:border-gray-700 ia:text-gray-700 ia:dark:text-gray-300"
+              >
+                {computed.length}
+              </Badge>
               {isExpanded ? (
                 <ChevronDown className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0" />
               ) : (
                 <ChevronRight className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0" />
               )}
             </button>
+            {position === "top-right" ? (
+              <MoveLeftIcon
+                className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0 ia:p-0.5 ia:cursor-pointer ia:absolute ia:-left-2.5 ia:top-2.5 ia:rounded-sm ia:bg-white ia:dark:bg-gray-900 ia:border ia:border-gray-200 ia:dark:border-gray-900 ia:hover:bg-gray-100 ia:dark:hover:bg-gray-800"
+                onClick={() => setPosition("top-left")}
+              />
+            ) : (
+              <MoveRightIcon
+                className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0 ia:p-0.5 ia:cursor-pointer ia:absolute ia:-right-2.5 ia:top-2.5 ia:rounded-sm ia:bg-white ia:dark:bg-gray-900 ia:border ia:border-gray-200 ia:dark:border-gray-900 ia:hover:bg-gray-100 ia:dark:hover:bg-gray-800"
+                onClick={() => setPosition("top-right")}
+              />
+            )}
           </div>
-
           {isExpanded && (
             <div className="ia:relative ia:h-[400px]">
               <ScrollArea className="ia:h-full">

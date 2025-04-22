@@ -84,7 +84,6 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     document
       .getElementById("storybook-root")
       ?.addEventListener("click", onDisableClick, true);
-    console.log("CCC: ");
   };
 
   const handleDestroy = () => {
