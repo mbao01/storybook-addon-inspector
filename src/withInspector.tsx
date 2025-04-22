@@ -12,7 +12,6 @@ import { destroyAll, init, rescale } from "./utilities/box-model/canvas";
 import { PARAM_KEY } from "./constants";
 import { getPointNodeAndCSSProperties, groupCSSProperties } from "./utilities";
 import { CSSPropertiesPopover } from "./components";
-import "./stylesheets/index.css";
 import { drawHoverElementOnPoint } from "./utilities/getPointNodeAndCSSProperties";
 
 const pointer: Point = { x: 0, y: 0 };
@@ -68,8 +67,14 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   }, []);
 
   const onDisableClick = useCallback((event: MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
+    // Check if the click target is not the popover shadow root (or inside it)
+    const popoverShadowRoot = document.getElementById(
+      `${CSS_PROPERTIES_POPOVER_ID}-shadow-root`,
+    );
+    if (!popoverShadowRoot?.contains(event.target as Node)) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
   }, []);
 
   const onResize = useCallback(() => {
