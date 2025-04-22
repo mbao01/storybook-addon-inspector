@@ -3,7 +3,7 @@ import { getPointNodeAndCSSProperties, drawHoverElementOnPoint } from "./getPoin
 import { getElementFromPoint } from "./getElementFromPoint";
 import { getCSSProperties } from "./getCSSProperties";
 import { drawHoverElement, drawSelectedElement } from "./box-model/visualizer";
-import type { Obj, ObjList } from "./types";
+import type { ObjList } from "./types";
 
 // Mock the dependencies
 vi.mock("./getElementFromPoint");

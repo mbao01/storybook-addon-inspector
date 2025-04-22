@@ -67,7 +67,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
     });
   }, []);
 
-  const onDisableClick = useCallback((event: any) => {
+  const onDisableClick = useCallback((event: MouseEvent) => {
     event.stopPropagation();
     event.preventDefault();
   }, []);
