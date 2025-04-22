@@ -1,3 +1,15 @@
+# v0.0.7 (Tue Apr 22 2025)
+
+#### 🐛 Bug Fix
+
+- React shadow dom feature [#8](https://github.com/mbao01/storybook-addon-inspector/pull/8) ([@mbao01](https://github.com/mbao01))
+
+#### Authors: 1
+
+- Ayomide Bakare ([@mbao01](https://github.com/mbao01))
+
+---
+
 # v0.0.6 (Tue Apr 22 2025)
 
 #### 🐛 Bug Fix
