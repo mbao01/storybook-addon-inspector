@@ -11,7 +11,7 @@ describe("CSSPropertiesPopoverShadowRoot", () => {
     open: true,
   };
 
-  it.only("renders shadow root", () => {
+  it("renders shadow root", () => {
     const { asFragment } = render(
       <CSSPropertiesPopoverShadowRoot {...mockProps} />,
     );
