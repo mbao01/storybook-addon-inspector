@@ -110,11 +110,13 @@ export const CSSPropertiesPopover = ({
             </button>
             {position === "top-right" ? (
               <MoveLeftIcon
+                data-testid="move-left-button"
                 className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0 ia:p-0.5 ia:cursor-pointer ia:absolute ia:-left-2.5 ia:top-2.5 ia:rounded-sm ia:bg-white ia:dark:bg-gray-900 ia:border ia:border-gray-200 ia:dark:border-gray-900 ia:hover:bg-gray-100 ia:dark:hover:bg-gray-800"
                 onClick={() => setPosition("top-left")}
               />
             ) : (
               <MoveRightIcon
+                data-testid="move-right-button"
                 className="ia:size-4 ia:text-gray-500 ia:dark:text-gray-400 ia:flex-shrink-0 ia:p-0.5 ia:cursor-pointer ia:absolute ia:-right-2.5 ia:top-2.5 ia:rounded-sm ia:bg-white ia:dark:bg-gray-900 ia:border ia:border-gray-200 ia:dark:border-gray-900 ia:hover:bg-gray-100 ia:dark:hover:bg-gray-800"
                 onClick={() => setPosition("top-right")}
               />
