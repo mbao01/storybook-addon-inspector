@@ -29,7 +29,7 @@ export const getPointNodeAndCSSProperties = (point: Point) => {
 export const drawHoverElementOnPoint = (point: Point, currentNode) => {
   const nodeAtPointerRef = getElementFromPoint(point.x, point.y);
 
-  if (nodeAtPointerRef && !nodeAtPointerRef.contains(currentNode)) {
+  if (!nodeAtPointerRef?.contains(currentNode)) {
     drawHoverElement(nodeAtPointerRef);
   }
 };

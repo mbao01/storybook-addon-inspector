@@ -8,6 +8,6 @@ export function drawSelectedElement(element: HTMLElement) {
   draw("selected", drawBoxModel(element));
 }
 
-export function drawHoverElement(element: HTMLElement) {
+export function drawHoverElement(element: HTMLElement | null) {
   draw("hover", drawBoxModel(element));
 }
