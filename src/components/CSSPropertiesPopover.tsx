@@ -18,13 +18,6 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { cn } from "../lib/utils";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../ui/select";
 
 type CSSPropertyValue = Partial<
   Record<"value" | "computed" | "variableValue", string> &

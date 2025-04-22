@@ -18,7 +18,8 @@ import { drawHoverElementOnPoint } from "./utilities/getPointNodeAndCSSPropertie
 const pointer: Point = { x: 0, y: 0 };
 
 export const withInspector: DecoratorFunction = (StoryFn, context) => {
-  const CSS_PROPERTIES_POPOVER_ID = "css-properties-popover";
+  const CSS_PROPERTIES_POPOVER_ID =
+    "storybook-addon-inspector-css-properties-popover";
   const isActive = context.globals?.[PARAM_KEY];
   const [nodeProperties, setNodeProperties] = useState<{
     node: HTMLElement | null;
