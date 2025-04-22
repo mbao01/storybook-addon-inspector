@@ -11,8 +11,7 @@ import type { CSSPropertiesObj, Point } from "./utilities/types";
 import { destroyAll, init, rescale } from "./utilities/box-model/canvas";
 import { PARAM_KEY } from "./constants";
 import { getPointNodeAndCSSProperties, groupCSSProperties } from "./utilities";
-import { CSSPropertiesPopover } from "./components";
-import "./stylesheets/index.css";
+import { CSSPropertiesPopoverShadowRoot } from "./components";
 import { drawHoverElementOnPoint } from "./utilities/getPointNodeAndCSSProperties";
 
 const pointer: Point = { x: 0, y: 0 };
@@ -21,6 +20,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   const CSS_PROPERTIES_POPOVER_ID =
     "storybook-addon-inspector-css-properties-popover";
   const isActive = context.globals?.[PARAM_KEY];
+  const isEnabled = context.viewMode === "story" && isActive;
   const [nodeProperties, setNodeProperties] = useState<{
     node: HTMLElement | null;
     properties: CSSPropertiesObj | null;
@@ -68,8 +68,14 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   }, []);
 
   const onDisableClick = useCallback((event: MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
+    // Check if the click target is not the popover shadow root (or inside it)
+    const popoverShadowRoot = document.getElementById(
+      `${CSS_PROPERTIES_POPOVER_ID}-shadow-root`,
+    );
+    if (!popoverShadowRoot?.contains(event.target as Node)) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
   }, []);
 
   const onResize = useCallback(() => {
@@ -99,7 +105,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   };
 
   useEffect(() => {
-    if (isActive) {
+    if (isEnabled) {
       document.addEventListener("pointermove", onPointerMove);
     }
 
@@ -107,10 +113,10 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
       document.removeEventListener("pointermove", onPointerMove);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isActive]);
+  }, [isEnabled]);
 
   useEffect(() => {
-    if (context.viewMode === "story" && isActive) {
+    if (isEnabled) {
       handleInit();
     } else {
       handleDestroy();
@@ -118,13 +124,13 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
 
     return handleDestroy;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isActive, context.viewMode]);
+  }, [isEnabled]);
 
   return (
     <>
       <StoryFn />
-      {isActive && (
-        <CSSPropertiesPopover
+      {isEnabled && (
+        <CSSPropertiesPopoverShadowRoot
           id={CSS_PROPERTIES_POPOVER_ID}
           open={open}
           tokens={tokens ?? []}

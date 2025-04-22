@@ -23,6 +23,7 @@ export default defineConfig({
       external: [
         "react",
         "react-dom",
+        "react-shadow",
         "react/jsx-runtime",
         "storybook",
         ...globalManagerPackages,

@@ -13,26 +13,12 @@ import {
   Variable,
 } from "lucide-react";
 
+import type { CSSPropertyPopoverProps, CSSPropertyValue } from "./types";
 import { Popover, PopoverContent } from "../ui/popover";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { cn } from "../lib/utils";
-
-type CSSPropertyValue = Partial<
-  Record<"value" | "computed" | "variableValue", string> &
-    Record<"token" | "variable", string[]>
-> & {
-  property: string;
-};
-
-type CSSPropertyPopoverProps = {
-  id: string;
-  tokens: CSSPropertyValue[];
-  computed: CSSPropertyValue[];
-  variables: CSSPropertyValue[];
-  open: boolean;
-};
 
 type PopoverPosition = "top-right" | "top-left";
 

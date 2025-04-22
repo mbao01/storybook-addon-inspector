@@ -1,2 +1,2 @@
 export { Tool } from "./Tool";
-export { CSSPropertiesPopover } from "./CSSPropertiesPopover";
+export { CSSPropertiesPopoverShadowRoot } from "./CSSPropertiesPopoverShadowRoot";
