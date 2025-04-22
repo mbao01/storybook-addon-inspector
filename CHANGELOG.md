@@ -1,3 +1,15 @@
+# v0.0.6 (Tue Apr 22 2025)
+
+#### 🐛 Bug Fix
+
+- Visual cues and disable interaction [#7](https://github.com/mbao01/storybook-addon-inspector/pull/7) ([@mbao01](https://github.com/mbao01))
+
+#### Authors: 1
+
+- Ayomide Bakare ([@mbao01](https://github.com/mbao01))
+
+---
+
 # v0.0.5 (Thu Apr 17 2025)
 
 #### ⚠️ Pushed to `main`
