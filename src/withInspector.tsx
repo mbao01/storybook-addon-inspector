@@ -20,6 +20,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   const CSS_PROPERTIES_POPOVER_ID =
     "storybook-addon-inspector-css-properties-popover";
   const isActive = context.globals?.[PARAM_KEY];
+  const isEnabled = context.viewMode === "story" && isActive;
   const [nodeProperties, setNodeProperties] = useState<{
     node: HTMLElement | null;
     properties: CSSPropertiesObj | null;
@@ -104,7 +105,7 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
   };
 
   useEffect(() => {
-    if (isActive) {
+    if (isEnabled) {
       document.addEventListener("pointermove", onPointerMove);
     }
 
@@ -112,10 +113,10 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
       document.removeEventListener("pointermove", onPointerMove);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isActive]);
+  }, [isEnabled]);
 
   useEffect(() => {
-    if (context.viewMode === "story" && isActive) {
+    if (isEnabled) {
       handleInit();
     } else {
       handleDestroy();
@@ -123,12 +124,12 @@ export const withInspector: DecoratorFunction = (StoryFn, context) => {
 
     return handleDestroy;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isActive, context.viewMode]);
+  }, [isEnabled]);
 
   return (
     <>
       <StoryFn />
-      {isActive && (
+      {isEnabled && (
         <CSSPropertiesPopover
           id={CSS_PROPERTIES_POPOVER_ID}
           open={open}
